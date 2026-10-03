@@ -10,7 +10,12 @@ import { PillButton } from "@/components/ui/pill-button";
 import { cn } from "@/lib/cn";
 import { siteLinks } from "@/lib/nav";
 
-export function TopNav() {
+/**
+ * `introHidden`: the home page's blueprint hero fades the nav in at the end of
+ * its intro. The nav starts hidden only when JavaScript is running, so it is
+ * never lost without it; the hero then owns its visibility.
+ */
+export function TopNav({ introHidden = false }: { introHidden?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -39,7 +44,13 @@ export function TopNav() {
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-8 z-50">
+    <header
+      data-intro-nav={introHidden || undefined}
+      className={cn(
+        "fixed inset-x-0 top-8 z-50",
+        introHidden && "[@media(scripting:enabled)]:invisible [@media(scripting:enabled)]:opacity-0",
+      )}
+    >
       <div className="mx-auto w-full max-w-[1440px] px-4 lg:px-12">
         <nav
           className={cn(

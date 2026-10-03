@@ -13,7 +13,8 @@ export function AboutHero() {
         src="/images/about/hero.png"
         alt="Steel fixers tying reinforcement cages on a VICIAD site"
         fill
-        priority
+        loading="eager"
+        fetchPriority="high"
         sizes="100vw"
         className="object-cover object-[50%_38%]"
       />

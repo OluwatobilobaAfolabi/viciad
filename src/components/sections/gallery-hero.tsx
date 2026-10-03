@@ -11,7 +11,8 @@ export function GalleryHero() {
         src="/images/gallery/hero.jpg"
         alt="A gallery hall hung with framed photographs"
         fill
-        priority
+        loading="eager"
+        fetchPriority="high"
         sizes="100vw"
         className="object-cover object-[50%_15%]"
       />

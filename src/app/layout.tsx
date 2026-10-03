@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
-import { Archivo, Geist } from "next/font/google";
+import { Archivo, Bricolage_Grotesque, Geist } from "next/font/google";
 import "./globals.css";
 
 const archivo = Archivo({
   variable: "--font-archivo",
   subsets: ["latin"],
+  display: "swap",
+});
+
+/* Headline face for the redesign; the width axis lets headlines run condensed. */
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+  axes: ["wdth", "opsz"],
   display: "swap",
 });
 
@@ -29,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${archivo.variable} ${geist.variable}`}>
+    <html lang="en" className={`${archivo.variable} ${bricolage.variable} ${geist.variable}`}>
       <body className="font-body antialiased">{children}</body>
     </html>
   );

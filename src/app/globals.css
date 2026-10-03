@@ -26,6 +26,18 @@
   --color-placeholder: #d9d9d9;
   --color-wabeco: #f9dc06;
 
+  /* Hero scroll cue: a short bar travelling down its track. */
+  --animate-scroll-cue: scroll-cue 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+
+  @keyframes scroll-cue {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(200%);
+    }
+  }
+
   /* "You are here" ping: a ring leaves the dot and fades as it travels out. */
   --animate-ping-out: ping-out 2s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
 
@@ -80,6 +92,7 @@
   }
 
   --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-headline: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
   --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
   /* Only the numbered labels on the expertise cards use Geist. */
   --font-label: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
@@ -88,6 +101,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Lenis drives the scroll itself; native smoothing would fight it. */
+  html.lenis {
+    scroll-behavior: auto;
   }
 
   /* Clear the fixed nav (32px offset + 80px pill) when jumping to an anchor. */

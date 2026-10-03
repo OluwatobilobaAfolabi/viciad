@@ -45,7 +45,8 @@ export function ServicesHero() {
         src="/images/services/hero.jpg"
         alt="Steelwork rising against the sky on a VICIAD project"
         fill
-        priority
+        loading="eager"
+        fetchPriority="high"
         sizes="100vw"
         className="object-cover object-[50%_36%]"
       />
