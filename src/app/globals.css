@@ -1,26 +1,103 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+ * Design tokens for the VICIAD site.
+ * The Figma file exposes no published variables, so the palette below is the
+ * hex set used across the "Landing Page - Home" frame, named for reuse.
+ */
+@theme {
+  --color-ink: #0b0910;
+  --color-cloud: #f2effa;
+  --color-cloud-dim: #d1d1d1;
+  --color-brand: #8b5cf6;
+  --color-brand-dark: #7846f2;
+  --color-muted: #616161;
+  --color-cloud-soft: #e0e0e0;
+  --color-glass-line: #8f8f8f;
+  --color-panel: #1d182a;
+  --color-hairline: #dadada;
+  --color-hairline-mid: #727272;
+  --color-hairline-dark: #292929;
+  --color-nav-line: #f1ecfe;
+  --color-nav-link: #7a7a7a;
+  --color-switch: #f0f0f0;
+  --color-switch-line: #dcdcdc;
+  --color-switch-off: #757575;
+  --color-placeholder: #d9d9d9;
+  --color-wabeco: #f9dc06;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* "You are here" ping: a ring leaves the dot and fades as it travels out. */
+  --animate-ping-out: ping-out 2s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes ping-out {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    70% {
+      opacity: 0;
+    }
+    100% {
+      transform: scale(3.2);
+      opacity: 0;
+    }
   }
+
+  /* Squash-and-stretch on hover, settling back over a few decaying bounces. */
+  --animate-jelly: jelly 600ms ease-out;
+
+  @keyframes jelly {
+    0% {
+      transform: scale(1, 1);
+    }
+    20% {
+      transform: scale(1.08, 0.92);
+    }
+    40% {
+      transform: scale(0.94, 1.06);
+    }
+    60% {
+      transform: scale(1.04, 0.96);
+    }
+    80% {
+      transform: scale(0.98, 1.02);
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+  }
+
+  /* One cycle moves the track by exactly one copy of the list, so the loop is seamless. */
+  --animate-marquee: marquee 45s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* Only the numbered labels on the expertise cards use Geist. */
+  --font-label: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Clear the fixed nav (32px offset + 80px pill) when jumping to an anchor. */
+  :where(section, footer)[id] {
+    scroll-margin-top: 136px;
+  }
+
+  body {
+    background-color: #ffffff;
+    color: var(--color-ink);
+    font-family: var(--font-body);
+  }
 }
