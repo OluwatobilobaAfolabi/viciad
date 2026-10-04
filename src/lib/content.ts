@@ -15,6 +15,11 @@ export const CONTACT = {
   address: "Plot 7 Agbada 2 Shell Location Road, Off Airport Road, Rivers State",
 };
 
+/** The office address as a Google Maps search, for "Visit us" links. */
+export const MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  `${CONTACT.address}, Nigeria`,
+)}`;
+
 export const SERVICES = [
   {
     title: "Feasibility & Strategy Studies",

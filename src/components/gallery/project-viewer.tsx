@@ -5,7 +5,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 
 import { Reveal, RevealHeading } from "@/components/motion/reveal";
 import { ArrowUpRight } from "@/components/icons/arrow-up-right";
-import { Eyebrow, Placeholder } from "@/components/ui/eyebrow";
+import { Eyebrow } from "@/components/ui/eyebrow";
 import { Shell } from "@/components/ui/shell";
 import { cn } from "@/lib/cn";
 
@@ -86,9 +86,8 @@ export function ProjectViewer() {
               <span className="block">{project.title[0]}</span>
               <span className="block text-mist">{project.title[1]}</span>
             </RevealHeading>
-            <Reveal className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 font-sans text-sm text-stone">
-              <span>{count} photographs</span>
-              <Placeholder>client, location &amp; year</Placeholder>
+            <Reveal className="mt-10 font-sans text-sm text-stone">
+              <p>{count} photographs</p>
             </Reveal>
           </div>
         </div>
@@ -239,13 +238,6 @@ export function ProjectViewer() {
             </ul>
           )}
         </div>
-
-        <Reveal className="mt-20 rounded-md border border-dashed border-ash p-8 text-center md:mt-28 md:p-14">
-          <p className="type-eyebrow text-stone">More projects</p>
-          <p className="mt-4 font-sans text-[15px] text-stone">
-            <Placeholder>further projects — titles, details and photographs</Placeholder>
-          </p>
-        </Reveal>
       </Shell>
     </section>
   );

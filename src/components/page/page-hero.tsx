@@ -21,7 +21,7 @@ export function PageHero({
   alt,
   video,
   position = "50% 50%",
-  cta = { href: "#contact", label: "Talk with us" },
+  cta = { href: "/contact", label: "Talk with us" },
   children,
 }: {
   /** One block element per line, e.g. `<span className="block">…</span>`. */
@@ -71,7 +71,7 @@ export function PageHero({
   );
 
   return (
-    <section ref={root} data-nav-tone="dark" className="relative isolate flex min-h-svh flex-col overflow-hidden bg-onyx text-white">
+    <section ref={root} className="relative isolate flex min-h-svh flex-col overflow-hidden bg-onyx text-white">
       <div aria-hidden className="absolute inset-0 -z-10">
         <div data-hero-photo className="absolute inset-0">
           <Image

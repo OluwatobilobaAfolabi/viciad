@@ -1,6 +1,5 @@
 import { Reveal, RevealHeading } from "@/components/motion/reveal";
 import { WaterLensImage } from "@/components/motion/water-lens-image";
-import { Eyebrow } from "@/components/ui/eyebrow";
 import { Shell } from "@/components/ui/shell";
 
 const reasons = [
@@ -18,22 +17,35 @@ const reasons = [
   },
 ];
 
-/** Three reasons to rely on VICIAD, then a wide photograph with a water-glass lens. */
-export function WhyUs() {
+/**
+ * Our story: who founded VICIAD and why, the crane photograph in full (with
+ * its water-glass lens), then the three things clients rely on us for.
+ */
+export function OurStory() {
   return (
     <section className="bg-white py-28 md:py-40">
       <Shell>
-        <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-6">
-          <Eyebrow className="md:col-span-3 md:pt-4">
-            Why VICIAD
-          </Eyebrow>
-          <RevealHeading className="type-h2 text-onyx md:col-span-9">
-            <span className="block">Quality-assured.</span>
-            <span className="block text-mist">Independent. On time.</span>
-          </RevealHeading>
+        <div className="grid gap-y-10 md:grid-cols-12 md:items-end md:gap-x-6">
+          <RevealHeading className="type-h2 text-onyx md:col-span-5">Our Story</RevealHeading>
+          <Reveal className="md:col-span-6 md:col-start-7">
+            <p className="type-body max-w-xl text-stone">
+              VICIAD was registered in Nigeria by a group of highly seasoned professionals. The common goal
+              is to provide first-class services to the engineering and construction industry.
+            </p>
+          </Reveal>
         </div>
 
-        <Reveal stagger={0.12} className="mt-16 grid gap-12 md:mt-24 md:grid-cols-3 md:gap-6">
+        <Reveal className="mt-16 md:mt-24">
+          <WaterLensImage
+            src="/images/construction-site.jpg"
+            reveal="/images/construction-site-lines.webp"
+            alt="Tower cranes above a high-rise frame under construction"
+            drift={false}
+            className="aspect-[3/2] rounded-md"
+          />
+        </Reveal>
+
+        <Reveal stagger={0.12} className="mt-20 grid gap-12 md:mt-28 md:grid-cols-3 md:gap-6">
           {reasons.map(({ title, body }, index) => (
             <article key={title} className="border-t border-onyx pt-6">
               <p className="type-eyebrow text-stone">({String(index + 1).padStart(2, "0")})</p>
@@ -41,15 +53,6 @@ export function WhyUs() {
               <p className="type-body mt-4 max-w-sm text-stone">{body}</p>
             </article>
           ))}
-        </Reveal>
-
-        <Reveal className="mt-20 md:mt-28">
-          <WaterLensImage
-            src="/images/construction-site.jpg"
-            reveal="/images/construction-site-lines.webp"
-            alt="Tower cranes above a high-rise frame under construction"
-            className="aspect-[4/3] rounded-md md:aspect-[21/9]"
-          />
         </Reveal>
       </Shell>
     </section>

@@ -11,6 +11,9 @@ import { SplitText } from "gsap/SplitText";
  */
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, SplitText);
+  // Touch devices resize the page as the address bar slides in and out while
+  // scrolling; recalculating every trigger then makes pinned scenes jump.
+  ScrollTrigger.config({ ignoreMobileResize: true });
 }
 
 /** The site's single easing family (see the brief: nothing bouncy). */

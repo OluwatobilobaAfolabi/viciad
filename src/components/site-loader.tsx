@@ -8,7 +8,7 @@ import { loaderWork, markSiteReady, onLoaderWork } from "@/lib/site-loader";
 import { sampleWordmarkDots } from "@/lib/wordmark-dots";
 
 /** Shortest time on screen, so the whole fill always plays out. */
-const MIN_MS = 5000;
+const MIN_MS = 4000;
 /** Give up waiting after this and let the visitor in. */
 const MAX_MS = 20000;
 /** Width of the soft edge where dots turn from dull to lit, as a share of the wordmark. */

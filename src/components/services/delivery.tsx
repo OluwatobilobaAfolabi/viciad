@@ -30,7 +30,7 @@ export function Delivery() {
                 computerised techniques to provide four things:
               </p>
               <div className="flex items-end md:col-span-3 md:col-start-7">
-                <LineButton href="#contact" tone="dark">
+                <LineButton href="/contact" tone="dark">
                   Talk with us
                 </LineButton>
               </div>

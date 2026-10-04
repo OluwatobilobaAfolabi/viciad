@@ -77,6 +77,7 @@ export function BlueprintHero() {
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const blueprintRef = useRef<HTMLImageElement>(null);
+  const blueprintWrapRef = useRef<HTMLDivElement>(null);
   const photoRef = useRef<HTMLImageElement>(null);
   const photoWrapRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -175,7 +176,9 @@ export function BlueprintHero() {
         const built = new SceneClass(canvas, {
           detail: mobile ? "low" : "high",
           focalX: mobile ? FOCAL_X.mobile : FOCAL_X.desktop,
-          dprCap: mobile ? 1.5 : 2,
+          // Phones: lighter GPU work, so fewer dropped frames while scrolling.
+          dprCap: mobile ? 1.25 : 2,
+          antialias: !mobile,
         });
         scene = built;
 
@@ -283,6 +286,13 @@ export function BlueprintHero() {
             invalidateOnRefresh: true,
           },
         });
+        // Phones can drop a WebGL frame mid-swipe; with the drawing still
+        // hidden until its hand-over, a dropped frame shows black rather than
+        // flashing the still through.
+        if (mobile) {
+          gsap.set(blueprintWrapRef.current, { opacity: 0 });
+          tl.to(blueprintWrapRef.current, { opacity: 1, duration: 1 }, 69);
+        }
         tl.to(state, { c: 1, duration: 70 }, 0)
           .to(state, { draw: 1.03, duration: 58 }, 0)
           .to(cueRef.current, { autoAlpha: 0, duration: 2 }, 0)
@@ -393,7 +403,6 @@ export function BlueprintHero() {
 
   return (
     <section
-      data-nav-tone="dark"
       ref={sectionRef}
       data-mode="scroll"
       aria-label="Introduction"
@@ -412,7 +421,7 @@ export function BlueprintHero() {
         className="sticky top-0 h-svh w-full overflow-hidden [--focal:var(--focal-mobile)] md:[--focal:var(--focal-desktop)]"
       >
         {/* Stills: drawing at the bottom, photo wiping up over it. */}
-        <div aria-hidden className="absolute inset-0">
+        <div ref={blueprintWrapRef} aria-hidden className="absolute inset-0">
           <Image
             ref={blueprintRef}
             src="/hero/blueprint.jpg"
@@ -465,7 +474,7 @@ export function BlueprintHero() {
         ) : null}
 
         {/* The live 3D drawing. Decorative: the headline below is the content. */}
-        <canvas ref={canvasRef} aria-hidden className="absolute inset-0 size-full" />
+        <canvas ref={canvasRef} aria-hidden className="absolute inset-0 size-full max-md:[transform:translateZ(0)]" />
 
         {/* The drawing again, screened over the photo so the lines linger as it fills in. */}
         <div
@@ -543,7 +552,7 @@ export function BlueprintHero() {
                 skills.
               </p>
               <div ref={ctaRef} className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4">
-                <LineButton href="#contact">Talk with us</LineButton>
+                <LineButton href="/contact">Talk with us</LineButton>
                 <LineButton href="/gallery" variant="text">
                   Our projects
                 </LineButton>
@@ -552,12 +561,14 @@ export function BlueprintHero() {
           </div>
         </div>
 
-        {/* Scroll cue. */}
+        {/* Scroll cue: a mouse outline whose wheel is the travelling line. */}
         <div ref={cueRef} aria-hidden className="pointer-events-none absolute inset-x-0 bottom-8 flex justify-center">
           <div ref={cueInnerRef} className="flex flex-col items-center gap-3 opacity-0">
             <span className="font-label text-[10px] uppercase tracking-[0.3em] text-white/60">Scroll</span>
-            <span className="relative block h-10 w-px overflow-hidden bg-white/15">
-              <span className="absolute inset-x-0 top-0 h-1/2 bg-white motion-safe:animate-scroll-cue" />
+            <span className="relative block h-[42px] w-[26px] rounded-full border border-white/45">
+              <span className="absolute left-1/2 top-[7px] block h-[15px] w-px -translate-x-1/2 overflow-hidden bg-white/15">
+                <span className="absolute inset-x-0 top-0 h-1/2 bg-white motion-safe:animate-scroll-cue" />
+              </span>
             </span>
           </div>
         </div>

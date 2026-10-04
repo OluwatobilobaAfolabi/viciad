@@ -104,7 +104,7 @@ export function SectorsScroller() {
   );
 
   return (
-    <section ref={section} data-nav-tone="dark" className="relative bg-onyx text-white">
+    <section ref={section} className="relative bg-onyx text-white">
       <div className="flex flex-col justify-center overflow-hidden py-28 md:sticky md:top-0 md:h-svh md:pb-8 md:pt-24">
         <Shell className="grid gap-y-8 md:grid-cols-12 md:gap-x-6">
           <Eyebrow tone="light" className="md:col-span-3 md:pt-4">

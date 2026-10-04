@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ViciadWordmark } from "@/components/brand/viciad-wordmark";
 import { Dot } from "@/components/icons/dot";
@@ -13,10 +13,9 @@ import { siteLinks } from "@/lib/nav";
 
 /**
  * The redesign's nav: a floating glass capsule — logo left, a short menu, one
- * filled call to action. The frost is only 4%, so the page shows through it;
- * the links therefore follow what is behind the capsule, white over the dark
- * sections (marked data-nav-tone="dark") and grey over the light ones. The
- * plum logo, the violet active page and its GPS-style ping never change.
+ * filled call to action. Its glass is an 80% white overlay over a strong blur,
+ * so it reads as light frosted glass over every section; the links are grey,
+ * the logo violet, and the active page violet with its GPS-style ping.
  *
  * `introHidden`: the home hero fades the nav in at the end of its intro. It
  * starts hidden only when JavaScript is running, so it is never lost without.
@@ -24,10 +23,6 @@ import { siteLinks } from "@/lib/nav";
 export function TopNav({ introHidden = false }: { introHidden?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  // Whether the capsule currently sits over a dark section (one marked
-  // data-nav-tone="dark"). The glass is nearly clear, so the links follow it.
-  const [overDark, setOverDark] = useState(true);
-  const capsule = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -35,30 +30,17 @@ export function TopNav({ introHidden = false }: { introHidden?: boolean }) {
     const measure = () => {
       frame = 0;
       setScrolled(window.scrollY > 24);
-      const box = capsule.current?.getBoundingClientRect();
-      if (!box) return;
-      const y = box.top + box.height / 2;
-      setOverDark(
-        Array.from(document.querySelectorAll('[data-nav-tone="dark"]')).some((section) => {
-          const rect = section.getBoundingClientRect();
-          return rect.top <= y && rect.bottom > y;
-        }),
-      );
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(measure);
     };
     measure();
     window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
     return () => {
       if (frame) cancelAnimationFrame(frame);
       window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
     };
-  }, [pathname]);
-
-  const dark = overDark || menuOpen;
+  }, []);
 
   // Hold the page still behind the open mobile menu.
   useEffect(() => {
@@ -83,14 +65,12 @@ export function TopNav({ introHidden = false }: { introHidden?: boolean }) {
         introHidden && "[@media(scripting:enabled)]:invisible [@media(scripting:enabled)]:opacity-0",
       )}
     >
-      {/* The glass capsule: a 4% lavender frost over a strong blur, so the
-          page shows clearly through it. A lit top edge, a hairline border and
-          a soft shadow give it its shape; the shadow lifts once scrolled. */}
+      {/* The glass capsule: an 80% white overlay over a strong blur. A lit top
+          edge, a hairline border and a soft shadow give it its shape; the
+          shadow lifts once scrolled. */}
       <div
-        ref={capsule}
         className={cn(
-          "relative z-10 mx-auto max-w-[1376px] rounded-full border bg-[rgba(247,245,253,0.04)] backdrop-blur-[20px] backdrop-saturate-[1.8] transition-[border-color,box-shadow] duration-500",
-          dark ? "border-white/25" : "border-onyx/[0.08]",
+          "relative z-10 mx-auto max-w-[1376px] rounded-full border border-white/60 bg-white/80 backdrop-blur-[20px] backdrop-saturate-[1.8] transition-shadow duration-500",
           scrolled || menuOpen
             ? "shadow-[inset_0_1px_0_rgba(255,255,255,0.45),inset_0_-1px_0_rgba(255,255,255,0.08),0_12px_40px_-14px_rgba(10,10,10,0.35)]"
             : "shadow-[inset_0_1px_0_rgba(255,255,255,0.45),inset_0_-1px_0_rgba(255,255,255,0.08),0_6px_24px_-14px_rgba(10,10,10,0.2)]",
@@ -102,7 +82,7 @@ export function TopNav({ introHidden = false }: { introHidden?: boolean }) {
             aria-label="VICIAD — home"
             className="outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
           >
-            <ViciadWordmark className="h-6 w-auto text-plum md:h-7" />
+            <ViciadWordmark className="h-6 w-auto text-brand md:h-7" />
           </Link>
 
           <nav aria-label="Primary" className="hidden lg:block">
@@ -119,10 +99,7 @@ export function TopNav({ introHidden = false }: { introHidden?: boolean }) {
                         "after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:bg-brand after:transition-transform after:duration-500 after:ease-[cubic-bezier(0.215,0.61,0.355,1)]",
                         active
                           ? "font-semibold text-brand after:scale-x-0"
-                          : cn(
-                              "after:scale-x-0 hover:text-brand hover:after:scale-x-100",
-                              dark ? "text-white/80" : "text-nav-link",
-                            ),
+                          : "text-nav-link after:scale-x-0 hover:text-brand hover:after:scale-x-100",
                       )}
                     >
                       {active ? <Dot className="size-1.5" /> : null}
@@ -135,7 +112,7 @@ export function TopNav({ introHidden = false }: { introHidden?: boolean }) {
           </nav>
 
           <div className="hidden lg:block">
-            <LineButton href="#contact" variant="fill" size="sm">
+            <LineButton href="/contact" variant="fill" size="sm">
               Get in Touch
             </LineButton>
           </div>
@@ -146,10 +123,7 @@ export function TopNav({ introHidden = false }: { introHidden?: boolean }) {
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            className={cn(
-              "relative flex size-11 items-center justify-center outline-none transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-brand lg:hidden",
-              dark ? "text-white" : "text-onyx",
-            )}
+            className="relative flex size-11 items-center justify-center text-brand outline-none focus-visible:outline-2 focus-visible:outline-brand lg:hidden"
           >
             <span
               className={cn(
@@ -201,7 +175,7 @@ export function TopNav({ introHidden = false }: { introHidden?: boolean }) {
             })}
           </ul>
           <div>
-            <LineButton href="#contact" variant="fill" onClick={() => setMenuOpen(false)}>
+            <LineButton href="/contact" variant="fill" onClick={() => setMenuOpen(false)}>
               Get in Touch
             </LineButton>
           </div>

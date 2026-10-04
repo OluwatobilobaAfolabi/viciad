@@ -82,7 +82,9 @@ function compile(gl: WebGLRenderingContext, type: number, source: string) {
  * gently rippling lens shows `reveal` — an image pixel-aligned with `src` (the
  * same scene drawn in line) — bent as if through water. It trails the pointer
  * softly, swells open on entry and closes on exit; on touch screens a press
- * and drag moves it. The photo also drifts slightly slower than the page.
+ * and drag moves it. With `drift`, the photo also drifts slightly slower than
+ * the page (which shows it slightly zoomed so no edge appears); without it,
+ * the whole image is shown.
  *
  * Without WebGL it is simply the photograph. Reduced motion keeps the lens
  * but drops the ripple and the drift.
@@ -93,12 +95,14 @@ export function WaterLensImage({
   alt,
   className,
   sizes = "100vw",
+  drift = true,
 }: {
   src: string;
   reveal: string;
   alt: string;
   className?: string;
   sizes?: string;
+  drift?: boolean;
 }) {
   const frame = useRef<HTMLDivElement>(null);
   const inner = useRef<HTMLDivElement>(null);
@@ -107,7 +111,7 @@ export function WaterLensImage({
   // The parallax drift (same as ParallaxImage).
   useGSAP(
     () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (!drift || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       gsap.fromTo(
         inner.current,
         { yPercent: -7 },
@@ -118,7 +122,7 @@ export function WaterLensImage({
         },
       );
     },
-    { scope: frame },
+    { scope: frame, dependencies: [drift] },
   );
 
   useEffect(() => {
@@ -286,7 +290,7 @@ export function WaterLensImage({
 
   return (
     <div ref={frame} className={cn("relative touch-pan-y overflow-hidden bg-ash", className)}>
-      <div ref={inner} className="absolute inset-x-0 -inset-y-[9%]">
+      <div ref={inner} className={cn("absolute inset-x-0", drift ? "-inset-y-[9%]" : "inset-y-0")}>
         <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
         <canvas ref={canvas} aria-hidden className="pointer-events-none absolute inset-0 size-full" />
       </div>

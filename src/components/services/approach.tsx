@@ -127,7 +127,7 @@ export function Approach() {
   const fill = (index: number) => Math.min(Math.max(progress * stages.length - index, 0), 1);
 
   return (
-    <section id="approach" data-nav-tone="dark" className="bg-onyx text-white">
+    <section id="approach" className="bg-onyx text-white">
       <Shell className="pt-28 md:pt-40">
         <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-6">
           <Eyebrow tone="light" className="md:col-span-3 md:pt-4">

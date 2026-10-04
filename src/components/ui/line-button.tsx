@@ -20,7 +20,8 @@ type LineButtonProps = {
 
 /**
  * The redesign's call to action. On hover the arrow swaps; the outline variant
- * fills solid, the text variant draws its underline, the fill variant deepens.
+ * fills with the brand violet, the text variant draws its underline, the fill
+ * variant deepens.
  */
 export function LineButton({
   href,
@@ -42,10 +43,8 @@ export function LineButton({
         light ? "text-white focus-visible:outline-white" : "text-onyx focus-visible:outline-onyx",
         variant === "outline" && "rounded-full border",
         variant === "outline" && (size === "md" ? "h-12 px-6" : "h-10 px-5"),
-        variant === "outline" &&
-          (light
-            ? "border-white/45 hover:border-white hover:bg-white hover:text-onyx"
-            : "border-onyx/30 hover:border-onyx hover:bg-onyx hover:text-white"),
+        variant === "outline" && (light ? "border-white/45" : "border-onyx/30"),
+        variant === "outline" && "hover:border-brand hover:bg-brand hover:text-white",
         variant === "fill" &&
           "rounded-full bg-brand text-white hover:bg-brand-dark focus-visible:outline-brand",
         variant === "fill" && (size === "md" ? "h-12 pl-6 pr-1.5" : "h-11 pl-5 pr-1.5"),

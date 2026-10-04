@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ViciadWordmark } from "@/components/brand/viciad-wordmark";
 import { DotWordmark } from "@/components/decor/dot-wordmark";
 import { RevealHeading } from "@/components/motion/reveal";
-import { Eyebrow, Placeholder } from "@/components/ui/eyebrow";
+import { Eyebrow } from "@/components/ui/eyebrow";
 import { LineButton } from "@/components/ui/line-button";
 import { Shell } from "@/components/ui/shell";
 import { COMPANY, CONTACT, SERVICES } from "@/lib/content";
@@ -12,7 +12,7 @@ import { siteLinks } from "@/lib/nav";
 
 /**
  * The closing call to action and the full footer, shared by every page.
- * `#contact` lands here, so "Talk with us" / "Work with us" work everywhere.
+ * Its "Talk with us" leads to the contact page; the address is a direct mail link.
  */
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -20,7 +20,7 @@ export function SiteFooter() {
   const link = "w-fit font-sans text-[15px] text-white/80 transition-colors hover:text-white";
 
   return (
-    <footer id="contact" data-nav-tone="dark" className="relative overflow-hidden bg-onyx text-white">
+    <footer id="contact" className="relative overflow-hidden bg-onyx text-white">
       {/* A faint echo of the hero drawing. */}
       <div
         aria-hidden
@@ -39,7 +39,7 @@ export function SiteFooter() {
             <span className="block text-mist">Let&rsquo;s talk about your project.</span>
           </RevealHeading>
           <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
-            <LineButton href={`mailto:${CONTACT.email}`}>Talk with us</LineButton>
+            <LineButton href="/contact">Talk with us</LineButton>
             <LineButton href={`mailto:${CONTACT.email}`} variant="text">
               {CONTACT.email}
             </LineButton>
@@ -48,7 +48,7 @@ export function SiteFooter() {
 
         <div className="grid gap-12 border-t border-white/10 py-16 sm:grid-cols-2 md:grid-cols-12 md:gap-6">
           <div className="flex flex-col gap-6 md:col-span-4">
-            <ViciadWordmark className="h-7 w-auto self-start text-plum" />
+            <ViciadWordmark className="h-7 w-auto self-start text-brand" />
             <p className="max-w-xs font-sans text-[15px] leading-[1.6] text-mist">{COMPANY.summary}</p>
           </div>
 
@@ -91,20 +91,13 @@ export function SiteFooter() {
                 </a>
               ))}
             </p>
-            <p className="font-sans text-sm text-mist">
-              Hours: <Placeholder>office hours</Placeholder>
-            </p>
           </address>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-white/10 py-8 font-sans text-sm text-mist md:flex-row md:items-center md:justify-between">
+        <div className="border-t border-white/10 py-8 font-sans text-sm text-mist">
           <p>
             &copy; {year} {COMPANY.name}. All rights reserved.
           </p>
-          <div className="flex flex-wrap gap-x-6 gap-y-2">
-            <Placeholder>social links</Placeholder>
-            <Placeholder>privacy policy &amp; terms</Placeholder>
-          </div>
         </div>
 
         {/* The sign-off: the wordmark the full width of the page, in dots. */}

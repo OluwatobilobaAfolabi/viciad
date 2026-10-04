@@ -50,9 +50,17 @@ export class TowerScene {
   private focalX: number;
   private scratch = new Vector3();
 
-  constructor(canvas: HTMLCanvasElement, options: { detail: Detail; focalX: number; dprCap: number }) {
+  constructor(
+    canvas: HTMLCanvasElement,
+    options: { detail: Detail; focalX: number; dprCap: number; antialias?: boolean },
+  ) {
     this.focalX = options.focalX;
-    this.renderer = new WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: "high-performance" });
+    this.renderer = new WebGLRenderer({
+      canvas,
+      antialias: options.antialias ?? true,
+      alpha: false,
+      powerPreference: "high-performance",
+    });
     this.renderer.setClearColor(0x000000, 1);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, options.dprCap));
 

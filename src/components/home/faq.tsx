@@ -55,7 +55,7 @@ export function Faq() {
           </RevealHeading>
           <p className="type-body max-w-xs text-stone">Can&rsquo;t find what you need? We&rsquo;ll answer it directly.</p>
           <div>
-            <LineButton href="#contact" tone="dark">
+            <LineButton href="/contact" tone="dark">
               Talk with us
             </LineButton>
           </div>

@@ -29,7 +29,7 @@ export default function GalleryPage() {
           video="/images/gallery/gallery%20hero%20video.mp4"
           alt="A gallery of black-and-white construction photographs, with visitors walking through"
           position="50% 50%"
-          cta={{ href: "#contact", label: "Start a project" }}
+          cta={{ href: "/contact", label: "Start a project" }}
         />
         <ProjectViewer />
       </main>
