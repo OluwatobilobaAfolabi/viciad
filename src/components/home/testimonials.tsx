@@ -3,7 +3,7 @@ import { Eyebrow, Placeholder } from "@/components/ui/eyebrow";
 import { Shell } from "@/components/ui/shell";
 
 /**
- * 07 — testimonials. There are none on record yet, so these are marked
+ * Testimonials. There are none on record yet, so these are marked
  * placeholders: nothing here should be filled with invented quotes.
  */
 export function Testimonials() {
@@ -11,7 +11,7 @@ export function Testimonials() {
     <section className="bg-white py-28 md:py-40">
       <Shell>
         <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-6">
-          <Eyebrow index="06" className="md:col-span-3 md:pt-4">
+          <Eyebrow className="md:col-span-3 md:pt-4">
             Client voices
           </Eyebrow>
           <RevealHeading className="type-h2 text-onyx md:col-span-9">

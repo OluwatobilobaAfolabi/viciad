@@ -39,7 +39,7 @@ export default function ServicesPage() {
         <Approach />
         <Delivery />
       </main>
-      <SiteFooter index="04" />
+      <SiteFooter />
     </>
   );
 }

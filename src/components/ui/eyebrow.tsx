@@ -1,22 +1,18 @@
 import { cn } from "@/lib/cn";
 
-/** Section label: a numbered index in the accent, then the section's name. */
+/** Section label: the section's name in small spaced capitals. */
 export function Eyebrow({
-  index,
   children,
   tone = "dark",
   className,
 }: {
-  index: string;
   children: React.ReactNode;
   tone?: "light" | "dark";
   className?: string;
 }) {
   return (
-    <p className={cn("type-eyebrow flex items-center gap-3 self-start", tone === "dark" ? "text-stone" : "text-mist", className)}>
-      <span className="text-brand">{index}</span>
-      <span aria-hidden className="h-px w-6 bg-current opacity-40" />
-      <span>{children}</span>
+    <p className={cn("type-eyebrow self-start", tone === "dark" ? "text-stone" : "text-mist", className)}>
+      {children}
     </p>
   );
 }

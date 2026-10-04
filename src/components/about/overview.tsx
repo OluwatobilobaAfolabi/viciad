@@ -6,13 +6,13 @@ import { LineButton } from "@/components/ui/line-button";
 import { Shell } from "@/components/ui/shell";
 import { STATS } from "@/lib/content";
 
-/** 01 — who VICIAD is, the three figures, and a wide site photograph. */
+/** Who VICIAD is, the three figures, and a wide site photograph. */
 export function AboutOverview() {
   return (
     <section className="bg-white py-28 md:py-40">
       <Shell>
         <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-6">
-          <Eyebrow index="01" className="md:col-span-3 md:pt-4">
+          <Eyebrow className="md:col-span-3 md:pt-4">
             Overview
           </Eyebrow>
           <div className="md:col-span-9">

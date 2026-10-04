@@ -42,7 +42,7 @@ const subscribeReduced = (onChange: () => void) => {
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
- * 01 — the featured project. "Slideshow" is one large frame that crossfades
+ * The featured project. "Slideshow" is one large frame that crossfades
  * on its own (paused on hover or focus, and never for reduced motion) with a
  * thumbnail strip beneath; "Grid" lays every photograph out at once, and
  * choosing one opens it in the slideshow.
@@ -78,7 +78,7 @@ export function ProjectViewer() {
     <section className="bg-white py-28 md:py-40">
       <Shell>
         <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-6">
-          <Eyebrow index="01" className="md:col-span-3 md:pt-4">
+          <Eyebrow className="md:col-span-3 md:pt-4">
             Featured project
           </Eyebrow>
           <div className="md:col-span-9">

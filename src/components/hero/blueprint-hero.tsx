@@ -5,12 +5,21 @@ import Image from "next/image";
 import { useRef } from "react";
 
 import { LineButton } from "@/components/ui/line-button";
+import { cn } from "@/lib/cn";
 import { EASE, gsap, ScrollTrigger, SplitText } from "@/lib/gsap";
 import { lockScroll } from "@/lib/scroll-lock";
 import { holdLoader, siteReady } from "@/lib/site-loader";
 
 import { cameraKeys, sampleCamera } from "./camera-path";
-import { FINAL_CAMERA, FOCAL_X, FRAME, HERO_VIDEO_SRC, PIN_LENGTH_VH, type FinalCamera } from "./hero-config";
+import {
+  FINAL_CAMERA,
+  FOCAL_X,
+  FRAME,
+  HERO_VIDEO_SRC,
+  INTRO_CAPTIONS,
+  PIN_LENGTH_VH,
+  type FinalCamera,
+} from "./hero-config";
 import type { TowerScene } from "./tower-scene";
 
 type Mode = "scroll" | "static" | "calibrate" | "final";
@@ -81,6 +90,7 @@ export function BlueprintHero() {
   const cueRef = useRef<HTMLDivElement>(null);
   const cueInnerRef = useRef<HTMLDivElement>(null);
   const coverRef = useRef<HTMLDivElement>(null);
+  const captionsRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     (_context, contextSafe) => {
@@ -285,6 +295,15 @@ export function BlueprintHero() {
         if (videoWrapRef.current) {
           tl.fromTo(videoWrapRef.current, { opacity: 0 }, { opacity: 1, duration: 7 }, 88);
         }
+        // The three captions, each rising in and drifting out over its window.
+        Array.from(captionsRef.current?.children ?? []).forEach((caption, i) => {
+          const [inAt, outAt] = INTRO_CAPTIONS[i].at;
+          tl.fromTo(caption, { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 2.5, ease: EASE }, inAt).to(
+            caption,
+            { autoAlpha: 0, y: -28, duration: 2.5, ease: "power2.in" },
+            outAt,
+          );
+        });
         tl.fromTo(scrimRef.current, { opacity: 0 }, { opacity: 1, duration: 4 }, 93)
           .fromTo(nav, { autoAlpha: 0 }, { autoAlpha: 1, duration: 2.5 }, 96)
           .to(split.lines, { yPercent: 0, duration: 3, stagger: 0.8, ease: EASE }, 95)
@@ -467,12 +486,40 @@ export function BlueprintHero() {
 
         <div ref={labelsRef} aria-hidden className="pointer-events-none absolute inset-0 opacity-0" />
 
-        {/* Keeps the headline legible over the pale sky (and the lower photo on phones). */}
+        {/* Intro captions: hidden until the scroll timeline brings each in, so
+            the still, finished and no-JavaScript heroes never show them. */}
+        <div ref={captionsRef} className="pointer-events-none absolute inset-0">
+          {INTRO_CAPTIONS.map(({ lines, side }, i) => (
+            <div
+              key={lines[0]}
+              className={cn(
+                "invisible absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.92)_35%,transparent)] px-6 pb-12 pt-28 opacity-0",
+                "md:inset-x-auto md:bottom-auto md:top-[34%] md:max-w-[21vw] md:bg-none md:p-0",
+                side === "left" ? "md:left-16" : "md:right-16 md:text-right",
+              )}
+            >
+              <p className="type-eyebrow text-brand">{String(i + 1).padStart(2, "0")}</p>
+              <p className="mt-4 font-headline text-[1.9rem] font-bold leading-[1.02] tracking-[-0.03em] text-white [font-stretch:82%] md:mt-5 md:text-[clamp(1.9rem,2.5vw,3rem)]">
+                {lines.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Keeps the headline legible over the pale sky (and the lower photo on
+            phones), and carries the faint blueprint grid the inner-page heroes
+            share, so both arrive with the finished hero. */}
         <div
           ref={scrimRef}
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.35)_45%,transparent_70%)] opacity-0 md:bg-[linear-gradient(to_right,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.3)_32%,transparent_55%)]"
-        />
+        >
+          <div className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] [background-size:96px_96px] [mask-image:linear-gradient(to_bottom,#000,transparent_85%)]" />
+        </div>
 
         <div
           ref={copyRef}
@@ -497,7 +544,7 @@ export function BlueprintHero() {
               </p>
               <div ref={ctaRef} className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4">
                 <LineButton href="#contact">Talk with us</LineButton>
-                <LineButton href="/gallery" variant="text" className="hover:text-brand">
+                <LineButton href="/gallery" variant="text">
                   Our projects
                 </LineButton>
               </div>

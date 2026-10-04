@@ -4,13 +4,13 @@ import { useEffect, useRef, useState } from "react";
 
 import { WORDMARK_BOUNDS, WORDMARK_PATH } from "@/components/brand/viciad-wordmark";
 import { lockScroll } from "@/lib/scroll-lock";
-import { LOADER_SEEN_KEY, loaderWork, markSiteReady, onLoaderWork } from "@/lib/site-loader";
+import { loaderWork, markSiteReady, onLoaderWork } from "@/lib/site-loader";
 import { sampleWordmarkDots } from "@/lib/wordmark-dots";
 
 /** Shortest time on screen, so the whole fill always plays out. */
-const MIN_MS = 13000;
+const MIN_MS = 5000;
 /** Give up waiting after this and let the visitor in. */
-const MAX_MS = 25000;
+const MAX_MS = 20000;
 /** Width of the soft edge where dots turn from dull to lit, as a share of the wordmark. */
 const EDGE = 0.14;
 const STEPS = 6;
@@ -36,7 +36,7 @@ function mediaReady(el: HTMLImageElement | HTMLVideoElement) {
 }
 
 /**
- * The first screen of a visit: the VICIAD wordmark in dots, all dull, lighting
+ * The home page's opening screen: the VICIAD wordmark in dots, all dull, lighting
  * up violet from left to right as the page really loads.
  *
  * The dull wordmark is plain SVG, so it is on screen from the first paint,
@@ -48,8 +48,9 @@ function mediaReady(el: HTMLImageElement | HTMLVideoElement) {
  * animation always plays out, nor more than MAX_MS. Then the screen lifts
  * away and `siteReady` resolves.
  *
- * Shown once per browsing session: a head script marks <html> when it has
- * already played, and CSS hides it before it can flash. Without JavaScript it
+ * Shown whenever the home page is loaded in full — first visit, refresh or
+ * hard refresh. On other pages a head script marks <html> and CSS hides it
+ * before it can flash. Without JavaScript it
  * never shows at all.
  */
 export function SiteLoader() {
@@ -59,7 +60,7 @@ export function SiteLoader() {
   const counter = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    // Already played this session: CSS keeps it hidden; just let the page start.
+    // Not the home page: CSS keeps it hidden; just let the page start.
     if (document.documentElement.dataset.loader === "skip") {
       markSiteReady();
       return;
@@ -148,11 +149,6 @@ export function SiteLoader() {
     const finish = () => {
       if (leaving) return;
       leaving = true;
-      try {
-        sessionStorage.setItem(LOADER_SEEN_KEY, "1");
-      } catch {
-        // Storage blocked: the loader simply shows again next time.
-      }
       release();
       markSiteReady();
       overlay.dataset.state = "leaving";

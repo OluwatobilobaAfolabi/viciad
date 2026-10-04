@@ -1,5 +1,5 @@
-import { ParallaxImage } from "@/components/motion/parallax-image";
 import { Reveal, RevealHeading } from "@/components/motion/reveal";
+import { WaterLensImage } from "@/components/motion/water-lens-image";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Shell } from "@/components/ui/shell";
 
@@ -18,13 +18,13 @@ const reasons = [
   },
 ];
 
-/** 05 — three reasons to rely on VICIAD, then a wide photograph. */
+/** Three reasons to rely on VICIAD, then a wide photograph with a water-glass lens. */
 export function WhyUs() {
   return (
     <section className="bg-white py-28 md:py-40">
       <Shell>
         <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-6">
-          <Eyebrow index="04" className="md:col-span-3 md:pt-4">
+          <Eyebrow className="md:col-span-3 md:pt-4">
             Why VICIAD
           </Eyebrow>
           <RevealHeading className="type-h2 text-onyx md:col-span-9">
@@ -44,8 +44,9 @@ export function WhyUs() {
         </Reveal>
 
         <Reveal className="mt-20 md:mt-28">
-          <ParallaxImage
+          <WaterLensImage
             src="/images/construction-site.jpg"
+            reveal="/images/construction-site-lines.webp"
             alt="Tower cranes above a high-rise frame under construction"
             className="aspect-[4/3] rounded-md md:aspect-[21/9]"
           />

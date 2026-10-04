@@ -10,13 +10,13 @@ const promises = [
   "Early detection of deviations, so preventative action can be taken in time.",
 ];
 
-/** 03 — on-time completion and the four things that secure it. */
+/** On-time completion and the four things that secure it. */
 export function Delivery() {
   return (
     <section className="bg-paper py-28 md:py-40">
       <Shell>
         <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-6">
-          <Eyebrow index="03" className="md:col-span-3 md:pt-4">
+          <Eyebrow className="md:col-span-3 md:pt-4">
             Delivery
           </Eyebrow>
           <div className="md:col-span-9">

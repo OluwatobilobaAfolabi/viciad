@@ -1,21 +1,19 @@
 /**
- * Coordination for the site loader: the dot-wordmark screen shown on the
- * first page a visitor opens in a browsing session.
+ * Coordination for the site loader: the dot-wordmark screen shown whenever
+ * the home page is loaded in full (first visit, refresh or hard refresh).
  *
  * Pages register the work the loader should wait for with `holdLoader`, and
  * anything that must not start until the loader has gone (the home hero's
- * intro) awaits `siteReady`. On later pages in the session the loader is
- * skipped and `siteReady` resolves straight away.
+ * intro) awaits `siteReady`. When a page other than Home is loaded the
+ * loader is skipped and `siteReady` resolves straight away; moving between
+ * pages inside the site never loads a page in full, so it never shows then.
  */
-
-/** sessionStorage key marking that the loader has played this session. */
-export const LOADER_SEEN_KEY = "viciad-loader-seen";
 
 /**
- * Runs in <head> before first paint: if the loader has already played this
- * session, mark <html> so CSS hides it before it can flash.
+ * Runs in <head> before first paint: on any page but Home, mark <html> so CSS
+ * hides the loader before it can flash.
  */
-export const LOADER_HEAD_SCRIPT = `try{if(sessionStorage.getItem("${LOADER_SEEN_KEY}"))document.documentElement.dataset.loader="skip"}catch(e){}`;
+export const LOADER_HEAD_SCRIPT = `if(location.pathname!=="/")document.documentElement.dataset.loader="skip"`;
 
 const pending = new Set<Promise<unknown>>();
 const listeners = new Set<() => void>();

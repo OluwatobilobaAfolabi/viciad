@@ -57,3 +57,16 @@ export const HERO_VIDEO_SRC: string | null = null;
 
 /** Scroll distance the hero stays pinned for, in viewport heights. */
 export const PIN_LENGTH_VH = { desktop: 450, mobile: 250 };
+
+/**
+ * Captions shown one at a time during the intro, each in the empty side of
+ * the frame at that moment (measured from the drawing on desktop; on phones
+ * the building fills the width, so they sit at the foot over a soft fade).
+ * `at` is [fade in, fade out] on the 0–100 intro timeline; each takes 2.5
+ * units to fade, and all three are gone before the drawing hands over (70).
+ */
+export const INTRO_CAPTIONS = [
+  { lines: ["From feasibility", "to final commissioning."], side: "left", at: [18, 28] },
+  { lines: ["Independent advice.", "Quality-assured delivery."], side: "right", at: [35, 46] },
+  { lines: ["Completed on time,", "by design."], side: "left", at: [56, 66] },
+] as const;

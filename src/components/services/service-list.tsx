@@ -3,13 +3,13 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { Shell } from "@/components/ui/shell";
 import { SERVICES } from "@/lib/content";
 
-/** 01 — the six services as an index: number, name, what it covers. */
+/** The six services as an index: number, name, what it covers. */
 export function ServiceList() {
   return (
     <section className="bg-white py-28 md:py-40">
       <Shell>
         <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-6">
-          <Eyebrow index="01" className="md:col-span-3 md:pt-4">
+          <Eyebrow className="md:col-span-3 md:pt-4">
             What we do
           </Eyebrow>
           <div className="md:col-span-9">

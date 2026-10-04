@@ -51,7 +51,7 @@ const items = [
 ];
 
 /**
- * 06 — sectors and a featured project, explored sideways.
+ * Sectors and a featured project, explored sideways.
  *
  * On desktop the section holds still (position: sticky) while vertical
  * scrolling drives the row of cards left; the section is made exactly as tall
@@ -107,7 +107,7 @@ export function SectorsScroller() {
     <section ref={section} data-nav-tone="dark" className="relative bg-onyx text-white">
       <div className="flex flex-col justify-center overflow-hidden py-28 md:sticky md:top-0 md:h-svh md:pb-8 md:pt-24">
         <Shell className="grid gap-y-8 md:grid-cols-12 md:gap-x-6">
-          <Eyebrow index="05" tone="light" className="md:col-span-3 md:pt-4">
+          <Eyebrow tone="light" className="md:col-span-3 md:pt-4">
             Sectors &amp; projects
           </Eyebrow>
           <div className="flex flex-col gap-8 md:col-span-9 md:flex-row md:items-end md:justify-between">

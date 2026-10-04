@@ -39,7 +39,7 @@ const faqs = [
   },
 ];
 
-/** 09 — frequently asked questions, as an accessible accordion. */
+/** Frequently asked questions, as an accessible accordion. */
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
   const baseId = useId();
@@ -48,7 +48,7 @@ export function Faq() {
     <section className="bg-paper py-28 md:py-40">
       <Shell className="grid gap-16 md:grid-cols-12 md:gap-6">
         <div className="flex flex-col gap-10 md:col-span-4">
-          <Eyebrow index="07">FAQ</Eyebrow>
+          <Eyebrow>FAQ</Eyebrow>
           <RevealHeading className="type-h2 text-onyx">
             <span className="block">Questions,</span>
             <span className="block text-stone">answered.</span>

@@ -26,13 +26,13 @@ const areas = [
   },
 ];
 
-/** 03 — the three areas of expertise, on black. */
+/** The three areas of expertise, on black. */
 export function AboutExpertise() {
   return (
     <section data-nav-tone="dark" className="bg-onyx py-28 text-white md:py-40">
       <Shell>
         <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-6">
-          <Eyebrow index="03" tone="light" className="md:col-span-3 md:pt-4">
+          <Eyebrow tone="light" className="md:col-span-3 md:pt-4">
             Expertise
           </Eyebrow>
           <div className="md:col-span-9">

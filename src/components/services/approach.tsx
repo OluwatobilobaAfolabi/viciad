@@ -52,7 +52,7 @@ const stages = [
 const DESKTOP = "(min-width: 1024px)";
 
 /**
- * 02 — the approach, one stage at a time. From lg up the section is three
+ * The approach, one stage at a time. From lg up the section is three
  * screens tall: the layout holds still (position: sticky) below the nav and
  * the active stage steps 01 → 02 → 03 as you scroll, with a line under each
  * stage filling as you pass through it. Nothing is hijacked; you can always
@@ -130,7 +130,7 @@ export function Approach() {
     <section id="approach" data-nav-tone="dark" className="bg-onyx text-white">
       <Shell className="pt-28 md:pt-40">
         <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-6">
-          <Eyebrow index="02" tone="light" className="md:col-span-3 md:pt-4">
+          <Eyebrow tone="light" className="md:col-span-3 md:pt-4">
             Our approach
           </Eyebrow>
           <RevealHeading className="type-h2 md:col-span-9">

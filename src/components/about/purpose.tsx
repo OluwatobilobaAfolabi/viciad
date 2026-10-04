@@ -18,13 +18,13 @@ const pillars = [
   },
 ];
 
-/** 02 — mission and vision, each a single statement set large. */
+/** Mission and vision, each a single statement set large. */
 export function AboutPurpose() {
   return (
     <section className="bg-paper py-28 md:py-40">
       <Shell>
         <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-6">
-          <Eyebrow index="02" className="md:col-span-3 md:pt-4">
+          <Eyebrow className="md:col-span-3 md:pt-4">
             Purpose
           </Eyebrow>
           <RevealHeading className="type-h2 text-onyx md:col-span-9">

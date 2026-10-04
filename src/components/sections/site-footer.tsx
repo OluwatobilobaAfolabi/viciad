@@ -14,8 +14,7 @@ import { siteLinks } from "@/lib/nav";
  * The closing call to action and the full footer, shared by every page.
  * `#contact` lands here, so "Talk with us" / "Work with us" work everywhere.
  */
-/** `index`: the closing section's number, continuing the page's own sequence. */
-export function SiteFooter({ index = "08" }: { index?: string }) {
+export function SiteFooter() {
   const year = new Date().getFullYear();
   const columnTitle = "type-eyebrow text-mist";
   const link = "w-fit font-sans text-[15px] text-white/80 transition-colors hover:text-white";
@@ -32,7 +31,7 @@ export function SiteFooter({ index = "08" }: { index?: string }) {
 
       <Shell className="relative">
         <div className="py-28 md:py-40">
-          <Eyebrow index={index} tone="light">
+          <Eyebrow tone="light">
             Start a project
           </Eyebrow>
           <RevealHeading className="type-display mt-10 max-w-5xl">

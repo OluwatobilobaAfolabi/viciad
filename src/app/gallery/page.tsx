@@ -33,7 +33,7 @@ export default function GalleryPage() {
         />
         <ProjectViewer />
       </main>
-      <SiteFooter index="02" />
+      <SiteFooter />
     </>
   );
 }

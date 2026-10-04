@@ -39,7 +39,7 @@ export default function AboutPage() {
         <AboutExpertise />
         <AboutTeam />
       </main>
-      <SiteFooter index="05" />
+      <SiteFooter />
     </>
   );
 }
