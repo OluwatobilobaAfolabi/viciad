@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
-import { GalleryHero } from "@/components/sections/gallery-hero";
-import { GalleryShowcase } from "@/components/sections/gallery-showcase";
+import { ProjectViewer } from "@/components/gallery/project-viewer";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
+import { PageHero } from "@/components/page/page-hero";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { TopNav } from "@/components/sections/top-nav";
 
@@ -12,13 +13,27 @@ export const metadata: Metadata = {
 
 export default function GalleryPage() {
   return (
-    <div className="relative">
+    <>
+      <SmoothScroll />
       <TopNav />
       <main>
-        <GalleryHero />
-        <GalleryShowcase />
+        <PageHero
+          crumb="Gallery"
+          title={
+            <>
+              <span className="block">Some of our ongoing</span>
+              <span className="block text-white/55">and completed projects.</span>
+            </>
+          }
+          lead="A look at the work on site — from the earthworks and foundations to the jetty and the pipeline."
+          image="/images/gallery/hero.jpg"
+          alt="A gallery hall hung with framed photographs"
+          position="50% 15%"
+          cta={{ href: "#contact", label: "Start a project" }}
+        />
+        <ProjectViewer />
       </main>
-      <SiteFooter />
-    </div>
+      <SiteFooter index="02" />
+    </>
   );
 }

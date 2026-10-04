@@ -6,11 +6,24 @@
  * hex set used across the "Landing Page - Home" frame, named for reuse.
  */
 @theme {
+  /*
+   * Redesign palette: black, white and three warm neutrals, with brand violet
+   * as the single accent. Imagery carries the colour.
+   */
+  --color-onyx: #0a0a0a;
+  --color-graphite: #161616;
+  --color-paper: #f4f4f1;
+  --color-ash: #e3e3df;
+  --color-stone: #6f6f68;
+  --color-mist: #a3a39c;
+
   --color-ink: #0b0910;
   --color-cloud: #f2effa;
   --color-cloud-dim: #d1d1d1;
   --color-brand: #8b5cf6;
   --color-brand-dark: #7846f2;
+  /* The wordmark colour in the nav and footer. */
+  --color-plum: #541672;
   --color-muted: #616161;
   --color-cloud-soft: #e0e0e0;
   --color-glass-line: #8f8f8f;
@@ -93,6 +106,8 @@
 
   --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   --font-headline: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  /* Redesign body face. */
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
   /* Only the numbered labels on the expertise cards use Geist. */
   --font-label: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
@@ -118,4 +133,69 @@
     color: var(--color-ink);
     font-family: var(--font-body);
   }
+}
+
+/* Fills a progress line once per rotating-photo cycle. */
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/*
+ * Redesign type scale. Headlines are Bricolage Grotesque run condensed with
+ * tight tracking; body copy is Geist.
+ */
+@utility type-display {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-stretch: 82%;
+  font-size: clamp(2.6rem, 5vw, 5.6rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+@utility type-h2 {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-stretch: 84%;
+  font-size: clamp(2.4rem, 4.8vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+@utility type-h3 {
+  font-family: var(--font-headline);
+  font-weight: 600;
+  font-stretch: 90%;
+  font-size: clamp(1.4rem, 1.9vw, 1.85rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+@utility type-stat {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-stretch: 78%;
+  font-size: clamp(3.6rem, 6.6vw, 6.4rem);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility type-body {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+@utility type-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }

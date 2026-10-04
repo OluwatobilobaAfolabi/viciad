@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 
-import { Completion } from "@/components/sections/completion";
-import { OurApproach } from "@/components/sections/our-approach";
-import { ServicesHero } from "@/components/sections/services-hero";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
+import { PageHero } from "@/components/page/page-hero";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { TopNav } from "@/components/sections/top-nav";
+import { Approach } from "@/components/services/approach";
+import { CapabilityMarquee } from "@/components/services/capability-marquee";
+import { Delivery } from "@/components/services/delivery";
+import { ServiceList } from "@/components/services/service-list";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -14,14 +17,30 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return (
-    <div className="relative">
+    <>
+      <SmoothScroll />
       <TopNav />
       <main>
-        <ServicesHero />
-        <OurApproach />
-        <Completion />
+        <PageHero
+          crumb="Services"
+          title={
+            <>
+              <span className="block">Feasibility. Design.</span>
+              <span className="block text-white/55">Commissioning.</span>
+            </>
+          }
+          lead="We regularly handle projects from the initial feasibility phase right through to design, implementation and commissioning — or step in at any single stage of the cycle."
+          image="/images/services/hero.jpg"
+          alt="Steelwork rising against the sky on a VICIAD project"
+          position="50% 36%"
+        >
+          <CapabilityMarquee />
+        </PageHero>
+        <ServiceList />
+        <Approach />
+        <Delivery />
       </main>
-      <SiteFooter />
-    </div>
+      <SiteFooter index="04" />
+    </>
   );
 }

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 
-import { AboutHero } from "@/components/sections/about-hero";
-import { AboutOverview } from "@/components/sections/about-overview";
-import { Expertise } from "@/components/sections/expertise";
-import { MissionVision } from "@/components/sections/mission-vision";
-import { OurTeam } from "@/components/sections/our-team";
+import { AboutExpertise } from "@/components/about/expertise";
+import { AboutOverview } from "@/components/about/overview";
+import { AboutPurpose } from "@/components/about/purpose";
+import { AboutTeam } from "@/components/about/team";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
+import { PageHero } from "@/components/page/page-hero";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { TopNav } from "@/components/sections/top-nav";
 
@@ -16,16 +17,29 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="relative">
+    <>
+      <SmoothScroll />
       <TopNav />
       <main>
-        <AboutHero />
+        <PageHero
+          crumb="About us"
+          title={
+            <>
+              <span className="block">First-class services</span>
+              <span className="block text-white/55">for engineering &amp; construction.</span>
+            </>
+          }
+          lead="Providing first-class services to the engineering and construction industry — from the initial feasibility phase right through to commissioning."
+          image="/images/about/hero.png"
+          alt="Steel fixers tying reinforcement cages on a VICIAD site"
+          position="50% 38%"
+        />
         <AboutOverview />
-        <MissionVision />
-        <Expertise />
-        <OurTeam />
+        <AboutPurpose />
+        <AboutExpertise />
+        <AboutTeam />
       </main>
-      <SiteFooter />
-    </div>
+      <SiteFooter index="05" />
+    </>
   );
 }

@@ -11,7 +11,15 @@ import { cameraKeys, sampleCamera } from "./camera-path";
 import { FINAL_CAMERA, FOCAL_X, FRAME, HERO_VIDEO_SRC, PIN_LENGTH_VH, type FinalCamera } from "./hero-config";
 import type { TowerScene } from "./tower-scene";
 
-type Mode = "scroll" | "static" | "calibrate";
+type Mode = "scroll" | "static" | "calibrate" | "final";
+
+/**
+ * Set once the intro has played through to the end. Module state survives
+ * client-side navigation between pages but not a reload, which is exactly
+ * "once per page load": returning to Home through the nav shows the finished
+ * hero, and only a reload (or a new tab) plays the intro again.
+ */
+let introFinished = false;
 
 const MOBILE = "(max-width: 767px)";
 
@@ -60,6 +68,10 @@ function lockScroll(lock: boolean) {
  *   88–95%  video crossfade (only once HERO_VIDEO_SRC is set)
  *   95–100% headline, subcopy, CTAs and nav reveal
  *
+ * It plays once per page load: at the end the hero freezes in its finished
+ * state and the pinned scroll space collapses, so scrolling back up never
+ * rewinds it; returning to Home without reloading shows the finished hero.
+ *
  * Reduced motion and no-WebGL get a still version: blueprint → photo → text.
  * ?calibrate (dev only) freezes the final frame over a half-opacity drawing.
  */
@@ -95,7 +107,13 @@ export function BlueprintHero() {
       const calibrate = process.env.NODE_ENV !== "production" && new URLSearchParams(location.search).has("calibrate");
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const mobile = window.matchMedia(MOBILE).matches;
-      const mode: Mode = calibrate ? "calibrate" : reduced || !supportsWebGL() ? "static" : "scroll";
+      const mode: Mode = calibrate
+        ? "calibrate"
+        : introFinished
+          ? "final"
+          : reduced || !supportsWebGL()
+            ? "static"
+            : "scroll";
       section.dataset.mode = mode;
 
       let cancelled = false;
@@ -105,8 +123,14 @@ export function BlueprintHero() {
       let closeGui: (() => void) | null = null;
       let split: SplitText | null = null;
 
-      const atTop = window.scrollY < 10;
-      if (mode === "scroll" && atTop) lockScroll(true);
+      if (mode === "scroll") {
+        // Always start the intro from the top. Without this the browser
+        // restores the old scroll position on reload, dropping the visitor
+        // mid-sequence or past it.
+        if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+        window.scrollTo(0, 0);
+        lockScroll(true);
+      }
 
       /* ---------- Preloader: both stills and the fonts, with a progress line ---------- */
       const showProgress = safe((done: number, total: number) => {
@@ -128,6 +152,24 @@ export function BlueprintHero() {
           }),
         ),
       );
+
+      /* ---------- Already played this load: just the finished hero ---------- */
+      const showFinal = safe(() => {
+        gsap.set([preloaderRef.current, cueRef.current, canvas, overlayRef.current], { autoAlpha: 0 });
+        gsap.set(photoWrapRef.current, { "--reveal": "115%" });
+        if (videoWrapRef.current) gsap.set(videoWrapRef.current, { opacity: 1 });
+        gsap.set(scrimRef.current, { opacity: 1 });
+        gsap.set(nav, { autoAlpha: 1 });
+        gsap.fromTo(
+          [headlineRef.current, subRef.current, ctaRef.current],
+          { autoAlpha: 0, y: 16 },
+          { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.08, ease: EASE },
+        );
+      });
+      if (mode === "final") {
+        showFinal();
+        return;
+      }
 
       /* ---------- Static fallback: blueprint → photo → text, no pinning ---------- */
       const runStatic = safe(() => {
@@ -181,7 +223,7 @@ export function BlueprintHero() {
         let keys = cameraKeys(camera, mobile, orbitScreenX);
         let active = true;
 
-        ScrollTrigger.create({
+        const visibility = ScrollTrigger.create({
           trigger: section,
           start: "top bottom",
           end: "bottom top",
@@ -278,21 +320,60 @@ export function BlueprintHero() {
           .fromTo(ctaRef.current, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 2.5, ease: EASE }, 97.2)
           .set({}, {}, 100);
 
+        /*
+         * Once the timeline reaches the end the intro is done for this page
+         * load: freeze the finished hero, collapse the pinned scroll space to a
+         * single screen and shift the scroll position by the same amount in
+         * the same frame, so nothing on screen moves. Scrolling up can no
+         * longer rewind it, and the WebGL scene is freed.
+         */
+        tl.eventCallback("onComplete", () => {
+          if (introFinished) return;
+          introFinished = true;
+
+          const pinDistance = section.offsetHeight - window.innerHeight;
+          const scrollY = window.scrollY;
+
+          // kill(false), not kill(): with no argument ScrollTrigger reverts its
+          // animation to the first frame, which would undo the finished hero.
+          tl.scrollTrigger?.kill(false);
+          visibility.kill(false);
+          if (tick) gsap.ticker.remove(tick);
+          tick = null;
+          resizeObserver?.disconnect();
+          resizeObserver = null;
+          scene?.dispose();
+          scene = null;
+
+          section.dataset.mode = "final";
+          const target = Math.max(0, scrollY - pinDistance);
+          const lenis = window.__lenis;
+          if (lenis) {
+            lenis.resize();
+            lenis.scrollTo(target, { immediate: true, force: true });
+          } else {
+            window.scrollTo(0, target);
+          }
+          ScrollTrigger.refresh();
+        });
+
         ScrollTrigger.refresh();
 
         // Preloader out, then a few lines start drawing at the base.
-        const intro = gsap.timeline();
-        intro
+        gsap
+          .timeline()
           .to(barRef.current, { scaleX: 1, duration: 0.3, ease: EASE })
           .to(preloaderRef.current, { autoAlpha: 0, duration: 0.8, ease: EASE })
-          .add(() => lockScroll(false));
-        if (atTop) {
-          intro
-            .to(state, { intro: 0.07, duration: 2.4, ease: "power2.out" }, "<0.2")
-            .fromTo(cueInnerRef.current, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.8, ease: EASE }, "<0.6");
-        } else {
-          gsap.set(cueInnerRef.current, { autoAlpha: 1 });
-        }
+          .add(() => {
+            // Re-zero here as well: some browsers restore the old position
+            // after load, past our first reset. The page is still held, so
+            // this is invisible.
+            window.__lenis?.scrollTo(0, { immediate: true, force: true });
+            window.scrollTo(0, 0);
+            lockScroll(false);
+          })
+          .to(state, { intro: 0.07, duration: 2.4, ease: "power2.out" }, "<0.2")
+          .fromTo(cueInnerRef.current, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.8, ease: EASE }, "<0.6");
       });
 
       const run = async () => {
@@ -321,6 +402,7 @@ export function BlueprintHero() {
 
   return (
     <section
+      data-nav-tone="dark"
       ref={sectionRef}
       data-mode="scroll"
       aria-label="Introduction"
@@ -332,7 +414,7 @@ export function BlueprintHero() {
           "--focal-mobile": `${FOCAL_X.mobile * 100}%`,
         } as React.CSSProperties
       }
-      className="relative h-[calc(var(--pin-mobile)+100svh)] bg-black md:h-[calc(var(--pin-desktop)+100svh)] motion-reduce:h-svh data-[mode=calibrate]:h-svh data-[mode=static]:h-svh"
+      className="relative h-[calc(var(--pin-mobile)+100svh)] bg-black md:h-[calc(var(--pin-desktop)+100svh)] motion-reduce:h-svh data-[mode=calibrate]:h-svh data-[mode=final]:h-svh data-[mode=static]:h-svh"
     >
       <div
         ref={stageRef}
@@ -404,6 +486,7 @@ export function BlueprintHero() {
             src="/hero/blueprint.jpg"
             alt=""
             fill
+            loading="eager"
             unoptimized
             sizes="100vw"
             className="object-cover [object-position:var(--focal)_50%]"
@@ -442,7 +525,7 @@ export function BlueprintHero() {
               </p>
               <div ref={ctaRef} className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4">
                 <LineButton href="#contact">Talk with us</LineButton>
-                <LineButton href="/gallery" variant="text">
+                <LineButton href="/gallery" variant="text" className="hover:text-brand">
                   Our projects
                 </LineButton>
               </div>

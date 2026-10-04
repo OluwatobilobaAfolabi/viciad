@@ -11,7 +11,7 @@ import { cn } from "@/lib/cn";
  */
 export function Dot({ className }: { className?: string }) {
   return (
-    <span className={cn("relative inline-flex shrink-0 text-current", className)}>
+    <span className={cn("relative inline-flex shrink-0", className)}>
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-full bg-current opacity-0 motion-safe:animate-ping-out"

@@ -1,33 +1,63 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { ViciadWordmark } from "@/components/brand/viciad-wordmark";
-import { FooterRule } from "@/components/decor/dashed-rules";
-import { PillButton } from "@/components/ui/pill-button";
+import { RevealHeading } from "@/components/motion/reveal";
+import { Eyebrow, Placeholder } from "@/components/ui/eyebrow";
+import { LineButton } from "@/components/ui/line-button";
 import { Shell } from "@/components/ui/shell";
+import { COMPANY, CONTACT, SERVICES } from "@/lib/content";
 import { siteLinks } from "@/lib/nav";
 
-export function SiteFooter() {
+/**
+ * The closing call to action and the full footer, shared by every page.
+ * `#contact` lands here, so "Talk with us" / "Work with us" work everywhere.
+ */
+/** `index`: the closing section's number, continuing the page's own sequence. */
+export function SiteFooter({ index = "08" }: { index?: string }) {
+  const year = new Date().getFullYear();
+  const columnTitle = "type-eyebrow text-mist";
+  const link = "w-fit font-sans text-[15px] text-white/80 transition-colors hover:text-white";
+
   return (
-    <footer id="contact" className="bg-ink">
-      <Shell className="pb-16 pt-16 lg:pb-[56px] lg:pt-[104px]">
-        <div className="flex flex-col items-start gap-8 border-b-2 border-dashed border-hairline-dark pb-8 lg:flex-row lg:items-end lg:gap-[25px]">
-          <h2 className="font-display text-[32px] font-semibold leading-[1.41] text-white sm:text-[48px] lg:min-w-0 lg:flex-1 lg:text-[74px]">
-            What are you waiting for?
-            <br />
-            Let&rsquo;s talk about your project.
-          </h2>
-          <PillButton href="mailto:info@viciad.com">Get in Touch</PillButton>
+    <footer id="contact" data-nav-tone="dark" className="relative overflow-hidden bg-onyx text-white">
+      {/* A faint echo of the hero drawing. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute right-0 top-0 hidden h-[44rem] w-[58%] opacity-[0.16] [mask-image:linear-gradient(to_left,#000_35%,transparent)] md:block"
+      >
+        <Image src="/hero/blueprint.jpg" alt="" fill unoptimized sizes="58vw" className="object-cover object-[72%_28%]" />
+      </div>
+
+      <Shell className="relative">
+        <div className="py-28 md:py-40">
+          <Eyebrow index={index} tone="light">
+            Start a project
+          </Eyebrow>
+          <RevealHeading className="type-display mt-10 max-w-5xl">
+            <span className="block">What are you waiting for?</span>
+            <span className="block text-mist">Let&rsquo;s talk about your project.</span>
+          </RevealHeading>
+          <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <LineButton href={`mailto:${CONTACT.email}`}>Talk with us</LineButton>
+            <LineButton href={`mailto:${CONTACT.email}`} variant="text">
+              {CONTACT.email}
+            </LineButton>
+          </div>
         </div>
 
-        <div className="flex flex-col gap-10 pt-10 lg:flex-row lg:gap-[317px] lg:pt-[61px]">
-          <ViciadWordmark className="h-8 w-[144.285px] shrink-0 text-white" />
+        <div className="grid gap-12 border-t border-white/10 py-16 sm:grid-cols-2 md:grid-cols-12 md:gap-6">
+          <div className="flex flex-col gap-6 md:col-span-4">
+            <ViciadWordmark className="h-7 w-auto self-start text-plum" />
+            <p className="max-w-xs font-sans text-[15px] leading-[1.6] text-mist">{COMPANY.summary}</p>
+          </div>
 
-          <nav className="flex flex-col gap-6 leading-[1.41] text-white">
-            <h3 className="font-display text-[20px] font-semibold">Quick Links</h3>
-            <ul className="flex flex-col gap-3 whitespace-nowrap text-base font-medium leading-[1.41]">
+          <nav aria-label="Footer" className="flex flex-col gap-5 md:col-span-2">
+            <h2 className={columnTitle}>Company</h2>
+            <ul className="flex flex-col gap-3">
               {siteLinks.map(({ label, href }) => (
                 <li key={href}>
-                  <Link href={href} className="transition-colors hover:text-brand">
+                  <Link href={href} className={link}>
                     {label}
                   </Link>
                 </li>
@@ -35,31 +65,46 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <div className="flex flex-col gap-6 leading-[1.41] text-white lg:w-[421px]">
-            <h3 className="font-display text-[20px] font-semibold">Contact Us</h3>
-            <div className="flex flex-col gap-3 text-base font-medium leading-[1.41]">
-              <a href="mailto:info@viciad.com" className="transition-colors hover:text-brand">
-                info@viciad.com
-              </a>
-              <p>Plot 7 Agbada 2 Shell Location Road, Off Airport Road, Rivers State</p>
-              <p>
-                <a href="tel:08075420004" className="transition-colors hover:text-brand">
-                  08075420004
-                </a>
-                {", "}
-                <a href="tel:08075422777" className="transition-colors hover:text-brand">
-                  08075422777
-                </a>
-              </p>
-            </div>
+          <div className="flex flex-col gap-5 md:col-span-3">
+            <h2 className={columnTitle}>Services</h2>
+            <ul className="flex flex-col gap-3">
+              {SERVICES.map(({ title }) => (
+                <li key={title}>
+                  <Link href="/services" className={link}>
+                    {title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
+
+          <address className="flex flex-col gap-5 not-italic md:col-span-3">
+            <h2 className={columnTitle}>Office</h2>
+            <p className="max-w-[16rem] font-sans text-[15px] leading-[1.6] text-white/80">{CONTACT.address}</p>
+            <a href={`mailto:${CONTACT.email}`} className={link}>
+              {CONTACT.email}
+            </a>
+            <p className="flex flex-col gap-1">
+              {CONTACT.phones.map((phone) => (
+                <a key={phone} href={`tel:${phone}`} className={link}>
+                  {phone}
+                </a>
+              ))}
+            </p>
+            <p className="font-sans text-sm text-mist">
+              Hours: <Placeholder>office hours</Placeholder>
+            </p>
+          </address>
         </div>
 
-        <div className="flex flex-col items-center gap-6 pt-16 lg:pt-[66px]">
-          <FooterRule />
-          <p className="w-full text-center text-base font-medium leading-[1.41] text-white">
-            © 2024 Viciad Engineering &amp; Construction. All rights reserved
+        <div className="flex flex-col gap-4 border-t border-white/10 py-8 font-sans text-sm text-mist md:flex-row md:items-center md:justify-between">
+          <p>
+            &copy; {year} {COMPANY.name}. All rights reserved.
           </p>
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <Placeholder>social links</Placeholder>
+            <Placeholder>privacy policy &amp; terms</Placeholder>
+          </div>
         </div>
       </Shell>
     </footer>
