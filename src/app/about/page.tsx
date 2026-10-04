@@ -22,7 +22,6 @@ export default function AboutPage() {
       <TopNav />
       <main>
         <PageHero
-          crumb="About us"
           title={
             <>
               <span className="block">First-class services</span>
@@ -30,7 +29,8 @@ export default function AboutPage() {
             </>
           }
           lead="Providing first-class services to the engineering and construction industry — from the initial feasibility phase right through to commissioning."
-          image="/images/about/hero.png"
+          image="/images/about/hero-video-poster.jpg"
+          video="/images/about/about%20us%20video.mp4"
           alt="Steel fixers tying reinforcement cages on a VICIAD site"
           position="50% 38%"
         />

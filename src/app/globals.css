@@ -199,3 +199,8 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
+
+/* The site loader has already played this session (set by a head script). */
+html[data-loader="skip"] #site-loader {
+  display: none;
+}

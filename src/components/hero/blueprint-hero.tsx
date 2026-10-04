@@ -6,6 +6,8 @@ import { useRef } from "react";
 
 import { LineButton } from "@/components/ui/line-button";
 import { EASE, gsap, ScrollTrigger, SplitText } from "@/lib/gsap";
+import { lockScroll } from "@/lib/scroll-lock";
+import { holdLoader, siteReady } from "@/lib/site-loader";
 
 import { cameraKeys, sampleCamera } from "./camera-path";
 import { FINAL_CAMERA, FOCAL_X, FRAME, HERO_VIDEO_SRC, PIN_LENGTH_VH, type FinalCamera } from "./hero-config";
@@ -38,20 +40,6 @@ function waitForImage(img: HTMLImageElement | null) {
     img.addEventListener("load", () => resolve(), { once: true });
     img.addEventListener("error", () => resolve(), { once: true });
   });
-}
-
-/** Holds the page still while the preloader runs (works before or after Lenis starts). */
-function lockScroll(lock: boolean) {
-  const root = document.documentElement;
-  if (lock) {
-    root.dataset.scrollLocked = "true";
-    root.style.overflow = "hidden";
-    window.__lenis?.stop();
-  } else {
-    delete root.dataset.scrollLocked;
-    root.style.overflow = "";
-    window.__lenis?.start();
-  }
 }
 
 /**
@@ -92,9 +80,7 @@ export function BlueprintHero() {
   const ctaRef = useRef<HTMLDivElement>(null);
   const cueRef = useRef<HTMLDivElement>(null);
   const cueInnerRef = useRef<HTMLDivElement>(null);
-  const preloaderRef = useRef<HTMLDivElement>(null);
-  const barRef = useRef<HTMLDivElement>(null);
-  const percentRef = useRef<HTMLSpanElement>(null);
+  const coverRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     (_context, contextSafe) => {
@@ -122,6 +108,7 @@ export function BlueprintHero() {
       let resizeObserver: ResizeObserver | null = null;
       let closeGui: (() => void) | null = null;
       let split: SplitText | null = null;
+      let releaseScroll: (() => void) | null = null;
 
       if (mode === "scroll") {
         // Always start the intro from the top. Without this the browser
@@ -129,33 +116,18 @@ export function BlueprintHero() {
         // mid-sequence or past it.
         if ("scrollRestoration" in history) history.scrollRestoration = "manual";
         window.scrollTo(0, 0);
-        lockScroll(true);
+        releaseScroll = lockScroll();
       }
 
-      /* ---------- Preloader: both stills and the fonts, with a progress line ---------- */
-      const showProgress = safe((done: number, total: number) => {
-        const p = done / total;
-        gsap.to(barRef.current, { scaleX: p, duration: 0.4, ease: EASE });
-        if (percentRef.current) percentRef.current.textContent = `${Math.round(p * 100)}%`;
-      });
-      const assets = [
-        waitForImage(blueprintRef.current),
-        waitForImage(photoRef.current),
-        document.fonts.ready.then(() => undefined),
-      ];
-      let loaded = 0;
-      const preload = Promise.all(
-        assets.map((p) =>
-          p.then(() => {
-            loaded += 1;
-            if (!cancelled) showProgress(loaded, assets.length);
-          }),
-        ),
-      );
+      /* ---------- Loading: the site loader waits for both stills (and the 3D code, below) ---------- */
+      const preload = Promise.all([
+        holdLoader(waitForImage(blueprintRef.current)),
+        holdLoader(waitForImage(photoRef.current)),
+      ]);
 
       /* ---------- Already played this load: just the finished hero ---------- */
       const showFinal = safe(() => {
-        gsap.set([preloaderRef.current, cueRef.current, canvas, overlayRef.current], { autoAlpha: 0 });
+        gsap.set([coverRef.current, cueRef.current, canvas, overlayRef.current], { autoAlpha: 0 });
         gsap.set(photoWrapRef.current, { "--reveal": "115%" });
         if (videoWrapRef.current) gsap.set(videoWrapRef.current, { opacity: 1 });
         gsap.set(scrimRef.current, { opacity: 1 });
@@ -173,6 +145,7 @@ export function BlueprintHero() {
 
       /* ---------- Static fallback: blueprint → photo → text, no pinning ---------- */
       const runStatic = safe(() => {
+        gsap.to(coverRef.current, { autoAlpha: 0, duration: 0.6 });
         gsap.set(photoWrapRef.current, { "--reveal": "115%", opacity: 0 });
         gsap.set([cueRef.current, overlayRef.current], { autoAlpha: 0 });
         gsap.set(canvas, { autoAlpha: 0 });
@@ -181,8 +154,7 @@ export function BlueprintHero() {
         gsap.set([headlineRef.current, subRef.current, ctaRef.current], { autoAlpha: 0 });
         gsap
           .timeline({ delay: 0.2 })
-          .to(preloaderRef.current, { autoAlpha: 0, duration: 0.5 })
-          .to(photoWrapRef.current, { opacity: 1, duration: 1.4, ease: "power1.inOut" }, "+=0.5")
+          .to(photoWrapRef.current, { opacity: 1, duration: 1.4, ease: "power1.inOut" }, "+=0.3")
           .to(scrimRef.current, { opacity: 1, duration: 0.8 }, "-=0.4")
           .to([headlineRef.current, subRef.current, ctaRef.current], { autoAlpha: 1, duration: 0.8, stagger: 0.15 }, "<");
       });
@@ -263,7 +235,7 @@ export function BlueprintHero() {
         gsap.ticker.add(tick);
 
         if (mode === "calibrate") {
-          gsap.set([preloaderRef.current, cueRef.current, copyRef.current, scrimRef.current], { autoAlpha: 0 });
+          gsap.set([coverRef.current, cueRef.current, copyRef.current, scrimRef.current], { autoAlpha: 0 });
           gsap.set(nav, { autoAlpha: 0 });
           gsap.set(overlayRef.current, { mixBlendMode: "normal" });
           // Gated on NODE_ENV directly so the bundler drops lil-gui from
@@ -359,30 +331,30 @@ export function BlueprintHero() {
 
         ScrollTrigger.refresh();
 
-        // Preloader out, then a few lines start drawing at the base.
+        // The site loader has lifted: a few lines start drawing at the base.
         gsap
           .timeline()
-          .to(barRef.current, { scaleX: 1, duration: 0.3, ease: EASE })
-          .to(preloaderRef.current, { autoAlpha: 0, duration: 0.8, ease: EASE })
           .add(() => {
             // Re-zero here as well: some browsers restore the old position
             // after load, past our first reset. The page is still held, so
             // this is invisible.
             window.__lenis?.scrollTo(0, { immediate: true, force: true });
             window.scrollTo(0, 0);
-            lockScroll(false);
+            releaseScroll?.();
+            releaseScroll = null;
           })
+          .to(coverRef.current, { autoAlpha: 0, duration: 0.6, ease: EASE }, "<")
           .to(state, { intro: 0.07, duration: 2.4, ease: "power2.out" }, "<0.2")
           .fromTo(cueInnerRef.current, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.8, ease: EASE }, "<0.6");
       });
 
       const run = async () => {
         if (mode === "static") {
-          await preload;
+          await Promise.all([preload, siteReady]);
           if (!cancelled) runStatic();
           return;
         }
-        const [{ TowerScene }] = await Promise.all([import("./tower-scene"), preload]);
+        const [{ TowerScene }] = await Promise.all([holdLoader(import("./tower-scene")), preload, siteReady]);
         if (!cancelled) startScene(TowerScene);
       };
       run();
@@ -394,7 +366,7 @@ export function BlueprintHero() {
         scene?.dispose();
         closeGui?.();
         split?.revert();
-        lockScroll(false);
+        releaseScroll?.();
       };
     },
     { scope: sectionRef },
@@ -543,19 +515,9 @@ export function BlueprintHero() {
           </div>
         </div>
 
-        {/* Preloader. Hidden without JavaScript, so the page is never stuck behind it. */}
-        <div
-          ref={preloaderRef}
-          className="absolute inset-0 hidden flex-col items-center justify-center gap-4 bg-black [@media(scripting:enabled)]:flex"
-        >
-          <span className="font-label text-[10px] uppercase tracking-[0.32em] text-white/45">Loading drawings</span>
-          <div className="h-px w-40 overflow-hidden bg-white/15">
-            <div ref={barRef} className="h-full w-full origin-left scale-x-0 bg-white" />
-          </div>
-          <span ref={percentRef} className="font-label text-xs tabular-nums text-white/55">
-            0%
-          </span>
-        </div>
+        {/* Hides the hero's unstarted state until its intro is ready to run.
+            Only with JavaScript, so the page is never stuck behind it. */}
+        <div ref={coverRef} aria-hidden className="absolute inset-0 hidden bg-black [@media(scripting:enabled)]:block" />
       </div>
     </section>
   );

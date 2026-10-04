@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Archivo, Bricolage_Grotesque, Geist } from "next/font/google";
+import { SiteLoader } from "@/components/site-loader";
+import { LOADER_HEAD_SCRIPT } from "@/lib/site-loader";
+
 import "./globals.css";
 
 const archivo = Archivo({
@@ -37,8 +40,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${archivo.variable} ${bricolage.variable} ${geist.variable}`}>
-      <body className="font-body antialiased">{children}</body>
+    // suppressHydrationWarning: the loader's head script may mark <html> before hydration.
+    <html
+      lang="en"
+      className={`${archivo.variable} ${bricolage.variable} ${geist.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        {/* Must run during parsing, before first paint: next/script's
+            beforeInteractive queues inline code until Next's runtime loads. */}
+        <script dangerouslySetInnerHTML={{ __html: LOADER_HEAD_SCRIPT }} />
+      </head>
+      <body className="font-body antialiased">
+        <SiteLoader />
+        {children}
+      </body>
     </html>
   );
 }

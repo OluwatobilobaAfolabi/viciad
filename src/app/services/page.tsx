@@ -22,7 +22,6 @@ export default function ServicesPage() {
       <TopNav />
       <main>
         <PageHero
-          crumb="Services"
           title={
             <>
               <span className="block">Feasibility. Design.</span>

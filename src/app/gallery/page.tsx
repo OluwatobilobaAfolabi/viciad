@@ -18,7 +18,6 @@ export default function GalleryPage() {
       <TopNav />
       <main>
         <PageHero
-          crumb="Gallery"
           title={
             <>
               <span className="block">Some of our ongoing</span>
@@ -26,9 +25,10 @@ export default function GalleryPage() {
             </>
           }
           lead="A look at the work on site — from the earthworks and foundations to the jetty and the pipeline."
-          image="/images/gallery/hero.jpg"
-          alt="A gallery hall hung with framed photographs"
-          position="50% 15%"
+          image="/images/gallery/hero-video-poster.jpg"
+          video="/images/gallery/gallery%20hero%20video.mp4"
+          alt="A gallery of black-and-white construction photographs, with visitors walking through"
+          position="50% 50%"
           cta={{ href: "#contact", label: "Start a project" }}
         />
         <ProjectViewer />

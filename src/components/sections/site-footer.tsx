@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { ViciadWordmark } from "@/components/brand/viciad-wordmark";
+import { DotWordmark } from "@/components/decor/dot-wordmark";
 import { RevealHeading } from "@/components/motion/reveal";
 import { Eyebrow, Placeholder } from "@/components/ui/eyebrow";
 import { LineButton } from "@/components/ui/line-button";
@@ -105,6 +106,11 @@ export function SiteFooter({ index = "08" }: { index?: string }) {
             <Placeholder>social links</Placeholder>
             <Placeholder>privacy policy &amp; terms</Placeholder>
           </div>
+        </div>
+
+        {/* The sign-off: the wordmark the full width of the page, in dots. */}
+        <div className="pb-14 pt-6 md:pb-28 md:pt-10">
+          <DotWordmark />
         </div>
       </Shell>
     </footer>
