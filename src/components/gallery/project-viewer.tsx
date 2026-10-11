@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 import { Reveal, RevealHeading } from "@/components/motion/reveal";
 import { ArrowUpRight } from "@/components/icons/arrow-up-right";
@@ -10,18 +10,30 @@ import { Shell } from "@/components/ui/shell";
 import { cn } from "@/lib/cn";
 
 /**
- * The five photographs are all of one job — the road, the bridge piers, the
- * jetty, the foundations and the pipeline — so this is one project with five
- * photographs. More projects later means turning this into a list.
+ * Site photographs of the marine and jetty works. Each has a short title
+ * (shown with it) and a fuller description for screen readers.
  */
+const photo = (file: string, title: string, alt: string) => ({ src: `/images/gallery/site/${file}.webp`, title, alt });
+
 const project = {
   title: ["Road construction to an", "offshore loading jetty."],
   photos: [
-    { src: "/images/gallery/road-shoreline.png", alt: "Earthworks cut along the shoreline from the air" },
-    { src: "/images/gallery/bridge-piers.png", alt: "Concrete bridge piers standing in the river" },
-    { src: "/images/gallery/jetty-aerial.png", alt: "Aerial view of the jetty works and barge" },
-    { src: "/images/gallery/foundations.png", alt: "Reinforced foundations and formwork under construction" },
-    { src: "/images/gallery/pipeline.png", alt: "Pipeline walkway with crew in high-visibility gear" },
+    photo("rebar-cage-jetty", "Fixing a rebar cage on the jetty platform", "Two workers in orange coveralls and life vests fixing a reinforcement cage on a platform over the river"),
+    photo("pile-cap-reinforcement", "Pile cap reinforcement over the river", "Three workers tying reinforcement for a pile cap on a temporary platform above the water"),
+    photo("pile-caps-deck-beams", "Concrete pile caps and deck beams", "Cast concrete pile caps and deck beams standing on piles in the river, with an industrial plant behind"),
+    photo("crawler-crane-barge", "Crawler crane on a barge, pitching piles", "A crawler crane on a barge lifting a steel pile into position"),
+    photo("mooring-dolphins", "Completed mooring dolphins with bollards", "Three finished concrete mooring dolphins with bollards standing in the river"),
+    photo("shoreline-earthworks", "Shoreline access road earthworks", "A newly formed earth access road running along the shoreline"),
+    photo("loading-platform-crew", "Crew on the loading platform", "Crew in hard hats working on the loading platform, with tyre fenders on the jetty head"),
+    photo("walkway-crane-barge", "Walkway approach with the crane barge and tug", "A steel grating walkway leading out to a crane barge and a tug on the river"),
+    photo("cutter-suction-dredger", "Cutter suction dredger", "A blue and yellow cutter suction dredger moored beside a barge"),
+    photo("foundation-formwork", "Foundation reinforcement and formwork", "Reinforcement cages and timber formwork for foundations across a waterlogged site"),
+    photo("piling-rig-barge", "Piling rig on a barge", "A piling rig and crew working from a barge at the waterfront"),
+    photo("jetty-pipeline", "Pipeline along the jetty walkway", "A worker in orange coveralls walking beside the pipeline along the jetty walkway"),
+    photo("concrete-pump", "Pumping concrete for the pile caps", "A concrete pump boom and mixer truck placing concrete at the quayside"),
+    photo("steel-deck-frame", "Lifting a steel deck frame onto the piles", "A steel deck frame being lowered by crane onto piles in the river"),
+    photo("aerial-site", "Aerial view of the site and marine spread", "Aerial view of the cleared site, storage tanks and the marine spread of barges on the river"),
+    photo("quayside-rebar-mat", "Fixing a rebar mat at the quayside", "Workers in coveralls and yellow hard hats fixing a reinforcement mat at the quayside"),
   ],
 };
 
@@ -44,7 +56,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 /**
  * The featured project. "Slideshow" is one large frame that crossfades
  * on its own (paused on hover or focus, and never for reduced motion) with a
- * thumbnail strip beneath; "Grid" lays every photograph out at once, and
+ * scrollable thumbnail strip beneath; "Grid" lays every photograph out at once, and
  * choosing one opens it in the slideshow.
  */
 export function ProjectViewer() {
@@ -57,6 +69,17 @@ export function ProjectViewer() {
     () => true,
   );
   const count = project.photos.length;
+  const strip = useRef<HTMLUListElement>(null);
+
+  // Keep the active thumbnail in view by scrolling the strip sideways only
+  // (scrollIntoView would also move the page).
+  useEffect(() => {
+    const list = strip.current;
+    const thumb = list?.children[active] as HTMLElement | undefined;
+    if (!list || !thumb) return;
+    const left = thumb.offsetLeft - (list.clientWidth - thumb.clientWidth) / 2;
+    list.scrollTo({ left, behavior: reduced ? "auto" : "smooth" });
+  }, [active, reduced]);
 
   const playing = view === "slideshow" && !paused && !reduced;
 
@@ -137,6 +160,7 @@ export function ProjectViewer() {
                     alt={photo.alt}
                     fill
                     sizes="(max-width: 1440px) 100vw, 1312px"
+                    loading={Math.abs(index - active) <= 1 ? "eager" : "lazy"}
                     aria-hidden={index !== active || undefined}
                     className={cn(
                       "object-cover transition-[opacity,transform] duration-[1200ms] ease-[cubic-bezier(0.215,0.61,0.355,1)]",
@@ -146,8 +170,8 @@ export function ProjectViewer() {
                 ))}
 
                 <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-6 bg-[linear-gradient(to_top,rgba(10,10,10,0.7),transparent)] p-5 pt-20 md:p-8 md:pt-28">
-                  <p className="max-w-md font-sans text-sm text-white/85 md:text-[15px]">
-                    {project.photos[active].alt}
+                  <p className="max-w-xl font-headline text-xl font-semibold leading-tight tracking-[-0.02em] text-white [font-stretch:90%] md:text-3xl">
+                    {project.photos[active].title}
                   </p>
                   <div className="flex shrink-0 gap-2">
                     {[
@@ -168,15 +192,18 @@ export function ProjectViewer() {
                 </div>
               </div>
 
-              <ul className="mt-4 grid grid-cols-5 gap-2 md:gap-4">
+              <ul
+                ref={strip}
+                className="mt-4 flex snap-x gap-2 overflow-x-auto pb-2 [scrollbar-width:none] md:gap-4 [&::-webkit-scrollbar]:hidden"
+              >
                 {project.photos.map((photo, index) => {
                   const current = index === active;
                   return (
-                    <li key={photo.src}>
+                    <li key={photo.src} className="w-28 shrink-0 snap-start md:w-40">
                       <button
                         type="button"
                         onClick={() => setActive(index)}
-                        aria-label={`Show photograph ${index + 1} of ${count}`}
+                        aria-label={`Show photograph ${index + 1} of ${count}: ${photo.title}`}
                         aria-current={current ? "true" : undefined}
                         className="group block w-full text-left outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-onyx"
                       >
@@ -185,7 +212,7 @@ export function ProjectViewer() {
                             src={photo.src}
                             alt=""
                             fill
-                            sizes="20vw"
+                            sizes="160px"
                             className={cn(
                               "object-cover transition-opacity duration-500",
                               current ? "opacity-100" : "opacity-45 group-hover:opacity-80",
@@ -210,27 +237,32 @@ export function ProjectViewer() {
               </ul>
             </div>
           ) : (
-            <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
+            <ul className="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4">
               {project.photos.map((photo, index) => (
-                <li key={photo.src} className={cn(index === 0 && "col-span-2 row-span-2")}>
+                <li key={photo.src}>
                   <button
                     type="button"
                     onClick={() => {
                       setActive(index);
                       setView("slideshow");
                     }}
-                    aria-label={`Open photograph ${index + 1} of ${count} in the slideshow`}
-                    className="group relative block size-full min-h-40 overflow-hidden rounded-md bg-ash outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-onyx md:min-h-56"
+                    aria-label={`Open photograph ${index + 1} of ${count} in the slideshow: ${photo.title}`}
+                    className="group block w-full text-left outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-onyx"
                   >
-                    <Image
-                      src={photo.src}
-                      alt={photo.alt}
-                      fill
-                      sizes={index === 0 ? "66vw" : "33vw"}
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                    />
-                    <span className="absolute left-4 top-4 font-sans text-xs tabular-nums text-white drop-shadow">
-                      {pad(index + 1)}
+                    <span className="relative block aspect-square overflow-hidden rounded-md bg-ash">
+                      <Image
+                        src={photo.src}
+                        alt={photo.alt}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                      />
+                      <span className="absolute left-3 top-3 font-sans text-xs tabular-nums text-white drop-shadow">
+                        {pad(index + 1)}
+                      </span>
+                    </span>
+                    <span className="mt-3 block font-sans text-sm leading-snug text-onyx transition-colors group-hover:text-brand md:text-[15px]">
+                      {photo.title}
                     </span>
                   </button>
                 </li>
