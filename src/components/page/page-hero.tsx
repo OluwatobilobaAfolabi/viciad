@@ -104,7 +104,7 @@ export function PageHero({
 
       <Shell className="flex flex-1 flex-col justify-end pb-14 pt-36 md:pb-20">
         <div className="grid gap-10 md:grid-cols-12 md:items-end md:gap-6">
-          <h1 className="type-display md:col-span-8">{title}</h1>
+          <h1 className="type-display font-semibold md:col-span-8">{title}</h1>
           <div className="flex flex-col items-start gap-8 md:col-span-4">
             <p data-hero-fade className="type-body max-w-md text-white/75">
               {lead}

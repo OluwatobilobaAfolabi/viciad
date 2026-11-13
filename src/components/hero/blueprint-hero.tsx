@@ -508,7 +508,7 @@ export function BlueprintHero() {
               )}
             >
               <p className="type-eyebrow text-brand">{String(i + 1).padStart(2, "0")}</p>
-              <p className="mt-4 font-headline text-[1.9rem] font-bold leading-[1.02] tracking-[-0.03em] text-white [font-stretch:82%] md:mt-5 md:text-[clamp(1.9rem,2.5vw,3rem)]">
+              <p className="mt-4 font-headline text-[1.9rem] font-semibold leading-[1.1] tracking-[-0.02em] text-white md:mt-5 md:text-[clamp(1.9rem,2.5vw,3rem)]">
                 {lines.map((line) => (
                   <span key={line} className="block">
                     {line}
@@ -535,23 +535,23 @@ export function BlueprintHero() {
           className="absolute inset-x-0 bottom-0 md:inset-y-0 md:flex md:items-center"
         >
           <div className="mx-auto w-full max-w-[1440px] px-6 pb-14 md:px-16 md:pb-0 md:pt-16">
-            <div className="max-w-xl md:max-w-[min(42vw,640px)]">
+            <div className="max-w-xl md:max-w-2xl lg:max-w-3xl">
               <h1
                 ref={headlineRef}
-                className="font-headline text-[clamp(2.6rem,5vw,5.6rem)] font-bold leading-[0.98] tracking-[-0.035em] text-white [font-stretch:82%]"
+                className="font-headline text-[clamp(2.25rem,4.2vw,4.6rem)] font-semibold leading-[1.1] tracking-[-0.025em] text-white"
               >
                 <span className="block">Engineering That Holds.</span>
-                <span className="block">Construction That Lasts.</span>
+                <span className="block text-white/90">Construction That Lasts.</span>
               </h1>
               <p
                 ref={subRef}
-                className="mt-6 max-w-md font-label text-base leading-[1.5] text-white/75 md:text-[17px]"
+                className="mt-6 max-w-lg font-sans text-base leading-[1.6] text-white/80 md:text-[17px]"
               >
                 Quality-assured engineering services capable of satisfying the most stringent
                 requirements of our clients, wherever required, using the best available technical
                 skills.
               </p>
-              <div ref={ctaRef} className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4">
+              <div ref={ctaRef} className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
                 <LineButton href="/contact">Talk with us</LineButton>
                 <LineButton href="/gallery" variant="text">
                   Our projects

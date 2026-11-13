@@ -47,6 +47,12 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet"
+        />
         {/* Must run during parsing, before first paint: next/script's
             beforeInteractive queues inline code until Next's runtime loads. */}
         <script dangerouslySetInnerHTML={{ __html: LOADER_HEAD_SCRIPT }} />

@@ -36,7 +36,7 @@ export function ServiceList() {
               <span className="type-eyebrow text-stone transition-colors duration-500 group-hover:text-brand md:col-span-3">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <h3 className="font-headline text-[clamp(1.75rem,3.2vw,3rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-onyx transition-transform duration-500 ease-out [font-stretch:86%] md:col-span-5 md:group-hover:translate-x-3">
+              <h3 className="font-headline text-[clamp(1.75rem,3.2vw,3rem)] font-semibold leading-[1.05] tracking-[-0.025em] text-onyx transition-transform duration-500 ease-out md:col-span-5 md:group-hover:translate-x-3">
                 {title}
               </h3>
               <p className="type-body text-stone md:col-span-4">{body}</p>

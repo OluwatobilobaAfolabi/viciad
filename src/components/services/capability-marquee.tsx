@@ -22,7 +22,7 @@ function Track({ duplicate = false }: { duplicate?: boolean }) {
     >
       {capabilities.map((capability) => (
         <li key={capability} className="flex shrink-0 items-center">
-          <span className="whitespace-nowrap px-8 font-headline text-xl font-semibold tracking-[-0.02em] text-white [font-stretch:88%] md:px-12 md:text-2xl">
+          <span className="whitespace-nowrap px-8 font-headline text-xl font-semibold tracking-[-0.02em] text-white md:px-12 md:text-2xl">
             {capability}
           </span>
           <span aria-hidden className="size-1.5 rotate-45 bg-brand" />

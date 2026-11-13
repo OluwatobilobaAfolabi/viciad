@@ -78,7 +78,7 @@ export function Faq() {
                       onClick={() => setOpen(expanded ? null : index)}
                       className="group flex w-full items-center justify-between gap-6 py-7 text-left outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-onyx"
                     >
-                      <span className="font-headline text-xl font-semibold tracking-[-0.015em] text-onyx [font-stretch:90%] md:text-[1.4rem]">
+                      <span className="font-headline text-xl font-semibold tracking-[-0.015em] text-onyx md:text-[1.4rem]">
                         {q}
                       </span>
                       <span

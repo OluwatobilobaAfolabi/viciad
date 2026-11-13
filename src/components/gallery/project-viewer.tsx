@@ -170,7 +170,7 @@ export function ProjectViewer() {
                 ))}
 
                 <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-6 bg-[linear-gradient(to_top,rgba(10,10,10,0.7),transparent)] p-5 pt-20 md:p-8 md:pt-28">
-                  <p className="max-w-xl font-headline text-xl font-semibold leading-tight tracking-[-0.02em] text-white [font-stretch:90%] md:text-3xl">
+                  <p className="max-w-xl font-headline text-xl font-semibold leading-tight tracking-[-0.02em] text-white md:text-3xl">
                     {project.photos[active].title}
                   </p>
                   <div className="flex shrink-0 gap-2">

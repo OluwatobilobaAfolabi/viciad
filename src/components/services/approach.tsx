@@ -212,7 +212,7 @@ export function Approach() {
                     <p className="type-eyebrow text-brand">
                       Stage {String(index + 1).padStart(2, "0")} / {String(stages.length).padStart(2, "0")}
                     </p>
-                    <h3 className="mt-6 font-headline text-[clamp(2rem,3.6vw,3.5rem)] font-bold leading-none tracking-[-0.035em] [font-stretch:84%]">
+                    <h3 className="mt-6 font-headline text-[clamp(2rem,3.6vw,3.5rem)] font-bold leading-none tracking-[-0.035em]">
                       {stage.label}
                     </h3>
                     <p className="type-body mt-6 max-w-2xl text-mist">{stage.body}</p>

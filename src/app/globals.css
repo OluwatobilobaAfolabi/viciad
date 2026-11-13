@@ -102,13 +102,14 @@
     }
   }
 
-  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
-  --font-headline: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-figtree: "Figtree", sans-serif;
+  --font-display: "Figtree", var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-headline: "Figtree", var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
   /* Redesign body face. */
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-sans: "Figtree", var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Figtree", "Helvetica Neue", Helvetica, Arial, sans-serif;
   /* Only the numbered labels on the expertise cards use Geist. */
-  --font-label: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-label: "Figtree", var(--font-geist), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
@@ -133,6 +134,57 @@
   }
 }
 
+/*
+ * Figtree font utility classes as provided by Google Fonts:
+ * .figtree-<uniquifier> {
+ *   font-family: "Figtree", sans-serif;
+ *   font-optical-sizing: auto;
+ *   font-weight: <weight>;
+ *   font-style: normal;
+ * }
+ */
+.figtree,
+[class*="figtree-"] {
+  font-family: "Figtree", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.figtree-light {
+  font-family: "Figtree", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.figtree-regular {
+  font-family: "Figtree", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.figtree-medium {
+  font-family: "Figtree", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.figtree-semibold {
+  font-family: "Figtree", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.figtree-bold {
+  font-family: "Figtree", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
 /* Fills a progress line once per rotating-photo cycle. */
 @keyframes progress {
   from {
@@ -144,43 +196,39 @@
 }
 
 /*
- * Redesign type scale. Headlines are Bricolage Grotesque run condensed with
- * tight tracking; body copy is Geist.
+ * Redesign type scale powered by Figtree.
+ * Headings use Figtree semi-bold (600), body copy uses Figtree regular (400).
  */
 @utility type-display {
   font-family: var(--font-headline);
-  font-weight: 700;
-  font-stretch: 82%;
-  font-size: clamp(2.6rem, 5vw, 5.6rem);
-  line-height: 0.98;
-  letter-spacing: -0.035em;
+  font-weight: 600;
+  font-size: clamp(2.25rem, 4.2vw, 4.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
 }
 
 @utility type-h2 {
   font-family: var(--font-headline);
-  font-weight: 700;
-  font-stretch: 84%;
-  font-size: clamp(2.4rem, 4.8vw, 5rem);
-  line-height: 0.98;
-  letter-spacing: -0.035em;
+  font-weight: 600;
+  font-size: clamp(2.2rem, 4.4vw, 4.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
 }
 
 @utility type-h3 {
   font-family: var(--font-headline);
   font-weight: 600;
-  font-stretch: 90%;
-  font-size: clamp(1.4rem, 1.9vw, 1.85rem);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.35rem, 1.9vw, 1.8rem);
+  line-height: 1.18;
+  letter-spacing: -0.015em;
 }
 
 @utility type-stat {
   font-family: var(--font-headline);
-  font-weight: 700;
-  font-stretch: 78%;
-  font-size: clamp(3.6rem, 6.6vw, 6.4rem);
-  line-height: 0.9;
-  letter-spacing: -0.045em;
+  font-weight: 600;
+  font-size: clamp(3.2rem, 6vw, 5.8rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
   font-variant-numeric: tabular-nums;
 }
 

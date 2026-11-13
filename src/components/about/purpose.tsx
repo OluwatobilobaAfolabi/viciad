@@ -46,7 +46,7 @@ export function AboutPurpose() {
                 <h3 className="type-eyebrow text-onyx">{title}</h3>
                 <span className="type-eyebrow text-brand">{String(index + 1).padStart(2, "0")}</span>
               </div>
-              <p className="mt-6 max-w-xl font-headline text-[clamp(1.5rem,2.4vw,2.25rem)] font-medium leading-[1.15] tracking-[-0.02em] text-onyx [font-stretch:92%]">
+              <p className="mt-6 max-w-xl font-headline text-[clamp(1.5rem,2.4vw,2.25rem)] font-medium leading-[1.15] tracking-[-0.02em] text-onyx">
                 {body}
               </p>
             </Reveal>

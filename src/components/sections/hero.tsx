@@ -16,12 +16,12 @@ export function Hero() {
       <Shell className="relative lg:pt-12">
         <div className="flex w-full max-w-[1113px] flex-col gap-8">
           <div className="flex flex-col gap-4 text-cloud">
-            <h1 className="font-display text-[40px] font-semibold leading-[1.41] sm:text-[56px] lg:text-[74px]">
+            <h1 className="font-display text-[36px] font-semibold leading-[1.15] tracking-[-0.025em] sm:text-[50px] lg:text-[66px]">
               <span className="text-brand">Engineering</span> That Holds.
               <br />
               <span className="text-brand">Construction</span> That Lasts.
             </h1>
-            <p className="max-w-[644px] text-base leading-[1.41] lg:text-lg">
+            <p className="max-w-[644px] text-base leading-[1.6] lg:text-lg">
               Quality-assured engineering services capable of satisfying the most stringent
               requirements of our clients, wherever required, using the best available technical
               skills.

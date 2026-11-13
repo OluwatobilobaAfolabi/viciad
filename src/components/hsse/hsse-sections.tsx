@@ -82,7 +82,7 @@ export function HsseCoreStandards() {
             >
               <div>
                 <p className="type-eyebrow text-brand">{focus}</p>
-                <h3 className="mt-6 font-headline text-[clamp(2.6rem,4.4vw,4rem)] font-bold leading-none tracking-[-0.04em] [font-stretch:80%]">
+                <h3 className="mt-6 font-headline text-[clamp(2.6rem,4.4vw,4rem)] font-bold leading-none tracking-[-0.04em]">
                   {code}
                 </h3>
               </div>
@@ -121,7 +121,7 @@ export function HsseFurtherStandards() {
               key={code}
               className="grid gap-3 border-t border-onyx/15 py-8 md:grid-cols-12 md:items-baseline md:gap-6 md:py-10"
             >
-              <h3 className="font-headline text-[clamp(1.9rem,3.2vw,3rem)] font-bold leading-none tracking-[-0.035em] text-onyx [font-stretch:82%] md:col-span-5">
+              <h3 className="font-headline text-[clamp(1.9rem,3.2vw,3rem)] font-bold leading-none tracking-[-0.035em] text-onyx md:col-span-5">
                 {code}
               </h3>
               {title ? <p className="type-body text-stone md:col-span-7">{title}</p> : null}
@@ -141,7 +141,7 @@ export function HsseAim() {
         <Eyebrow className="md:col-span-3 md:pt-4">Our aim</Eyebrow>
         <Reveal className="md:col-span-9">
           <blockquote>
-            <p className="font-headline text-[clamp(1.9rem,3.6vw,3.4rem)] font-semibold leading-[1.08] tracking-[-0.03em] text-onyx [font-stretch:88%]">
+            <p className="font-headline text-[clamp(1.9rem,3.6vw,3.4rem)] font-semibold leading-[1.08] tracking-[-0.03em] text-onyx">
               To build engineering structures that stand the test of time while protecting not just our workers but
               also the environment
               <span className="text-mist"> — creating long-lasting engineering marvels with no adverse long-term impact.</span>

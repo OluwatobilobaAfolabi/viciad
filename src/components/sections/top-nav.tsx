@@ -284,7 +284,7 @@ export function TopNav({ introHidden = false }: { introHidden?: boolean }) {
                       <span className="min-w-0 flex-1">
                         <span
                           className={cn(
-                            "flex items-center gap-2 font-headline text-xl font-semibold tracking-[-0.02em] [font-stretch:90%]",
+                            "flex items-center gap-2 font-headline text-xl font-semibold tracking-[-0.02em]",
                             current ? "text-brand" : "text-onyx group-hover/item:text-brand",
                           )}
                         >
@@ -331,7 +331,7 @@ export function TopNav({ introHidden = false }: { introHidden?: boolean }) {
                         onClick={() => setSubOpen((open) => !open)}
                         aria-expanded={subOpen}
                         aria-controls={`mobile-sub-${index}`}
-                        className="flex w-full items-center justify-between py-5 text-left font-headline text-4xl font-semibold tracking-[-0.03em] text-white outline-none [font-stretch:85%] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                        className="flex w-full items-center justify-between py-5 text-left font-headline text-4xl font-semibold tracking-[-0.03em] text-white outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                       >
                         <span className="flex items-center gap-3">
                           {label}
@@ -387,7 +387,7 @@ export function TopNav({ introHidden = false }: { introHidden?: boolean }) {
                                     <span className="min-w-0 flex-1">
                                       <span
                                         className={cn(
-                                          "block font-headline text-xl font-semibold tracking-[-0.02em] [font-stretch:90%]",
+                                          "block font-headline text-xl font-semibold tracking-[-0.02em]",
                                           current ? "text-brand" : "text-white",
                                         )}
                                       >
@@ -415,7 +415,7 @@ export function TopNav({ introHidden = false }: { introHidden?: boolean }) {
                       href={href}
                       onClick={() => setMenuOpen(false)}
                       aria-current={href === pathname ? "page" : undefined}
-                      className="flex items-center justify-between py-5 font-headline text-4xl font-semibold tracking-[-0.03em] text-white [font-stretch:85%]"
+                      className="flex items-center justify-between py-5 font-headline text-4xl font-semibold tracking-[-0.03em] text-white"
                     >
                       {label}
                       {active ? <Dot className="size-2 text-brand" /> : null}
