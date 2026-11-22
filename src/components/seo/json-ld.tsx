@@ -15,6 +15,7 @@ export const ORGANIZATION_SCHEMA = {
   "@id": "https://www.viciad.org/#organization",
   name: "Viciad Engineering & Construction",
   alternateName: "VICIAD",
+  slogan: "Engineering That Holds. Construction That Lasts.",
   url: "https://www.viciad.org",
   logo: "https://www.viciad.org/apple-touch-icon.png",
   image: "https://www.viciad.org/og-image.jpg",

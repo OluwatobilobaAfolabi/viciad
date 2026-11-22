@@ -16,12 +16,15 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.viciad.org"),
   title: {
-    default: "Civil Engineering & Infrastructure Projects | VICIAD",
+    default: "Engineering That Holds. Construction That Lasts. | VICIAD",
     template: "%s | VICIAD",
   },
   description:
     "VICIAD delivers engineering that holds and construction that lasts. 147+ completed civil, road, and marine projects across Nigeria. Partner with us today.",
   keywords: [
+    "Engineering That Holds Construction That Lasts",
+    "Engineering That Holds",
+    "Construction That Lasts",
     "VICIAD",
     "Viciad Engineering & Construction",
     "civil construction company in Nigeria",
@@ -50,7 +53,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://www.viciad.org",
     siteName: "VICIAD Engineering & Construction",
-    title: "Civil Engineering & Infrastructure Projects | VICIAD",
+    title: "Engineering That Holds. Construction That Lasts. | VICIAD",
     description:
       "VICIAD delivers engineering that holds and construction that lasts. 147+ completed civil, road, and marine projects across Nigeria. Partner with us today.",
     images: [
@@ -58,13 +61,13 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "VICIAD Engineering & Construction — Projects across Nigeria",
+        alt: "VICIAD — Engineering That Holds. Construction That Lasts.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Civil Engineering & Infrastructure Projects | VICIAD",
+    title: "Engineering That Holds. Construction That Lasts. | VICIAD",
     description:
       "VICIAD delivers engineering that holds and construction that lasts. 147+ completed civil, road, and marine projects across Nigeria. Partner with us today.",
     images: ["/og-image.jpg"],
