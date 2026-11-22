@@ -9,14 +9,12 @@ import { ValueStatement } from "@/components/home/value-statement";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { TopNav } from "@/components/sections/top-nav";
+import { HOME_FAQ_SCHEMA, JsonLd } from "@/components/seo/json-ld";
 
-/*
- * The redesigned home page. News is left out until there is content for it;
- * the closing call to action is the top of the shared footer.
- */
 export default function Home() {
   return (
     <div className="relative">
+      <JsonLd data={HOME_FAQ_SCHEMA} />
       <SmoothScroll />
       <TopNav introHidden />
       <main>

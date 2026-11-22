@@ -5,15 +5,41 @@ import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { PageHero } from "@/components/page/page-hero";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { TopNav } from "@/components/sections/top-nav";
+import { createBreadcrumbSchema, JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
-  title: "Gallery",
-  description: "Some of VICIAD's ongoing and completed engineering and construction projects.",
+  title: "Engineering & Construction Projects Portfolio | VICIAD",
+  description:
+    "View VICIAD's portfolio of completed and ongoing civil construction, offshore jetty, foundation piling, and road infrastructure projects across Nigeria.",
+  alternates: {
+    canonical: "https://www.viciad.org/gallery",
+  },
+  openGraph: {
+    title: "Engineering & Construction Projects Portfolio | VICIAD",
+    description:
+      "View VICIAD's portfolio of completed and ongoing civil construction, offshore jetty, foundation piling, and road infrastructure projects across Nigeria.",
+    url: "https://www.viciad.org/gallery",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "VICIAD Projects Portfolio" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Engineering & Construction Projects Portfolio | VICIAD",
+    description:
+      "View VICIAD's portfolio of completed and ongoing civil construction, offshore jetty, foundation piling, and road infrastructure projects across Nigeria.",
+    images: ["/og-image.jpg"],
+  },
 };
+
+const breadcrumbs = createBreadcrumbSchema([
+  { name: "Home", url: "https://www.viciad.org" },
+  { name: "Gallery", url: "https://www.viciad.org/gallery" },
+]);
 
 export default function GalleryPage() {
   return (
     <>
+      <JsonLd data={breadcrumbs} />
       <SmoothScroll />
       <TopNav />
       <main>

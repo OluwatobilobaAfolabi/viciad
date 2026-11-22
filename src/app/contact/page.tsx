@@ -7,18 +7,43 @@ import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { PageHero } from "@/components/page/page-hero";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { TopNav } from "@/components/sections/top-nav";
+import { createBreadcrumbSchema, JsonLd } from "@/components/seo/json-ld";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Shell } from "@/components/ui/shell";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
+  title: "Contact VICIAD – Engineering Company in Rivers State",
   description:
-    "Talk to VICIAD about your engineering or construction project — email info@viciad.com, call 08075420004 or 08075422777, or visit us in Rivers State.",
+    "Get in touch with VICIAD Engineering & Construction in Rivers State, Nigeria. Call 08075420004 or email info@viciad.com to discuss your upcoming project.",
+  alternates: {
+    canonical: "https://www.viciad.org/contact",
+  },
+  openGraph: {
+    title: "Contact VICIAD – Engineering Company in Rivers State",
+    description:
+      "Get in touch with VICIAD Engineering & Construction in Rivers State, Nigeria. Call 08075420004 or email info@viciad.com to discuss your upcoming project.",
+    url: "https://www.viciad.org/contact",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Contact VICIAD Engineering" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact VICIAD – Engineering Company in Rivers State",
+    description:
+      "Get in touch with VICIAD Engineering & Construction in Rivers State, Nigeria. Call 08075420004 or email info@viciad.com to discuss your upcoming project.",
+    images: ["/og-image.jpg"],
+  },
 };
+
+const breadcrumbs = createBreadcrumbSchema([
+  { name: "Home", url: "https://www.viciad.org" },
+  { name: "Contact", url: "https://www.viciad.org/contact" },
+]);
 
 export default function ContactPage() {
   return (
     <>
+      <JsonLd data={breadcrumbs} />
       <SmoothScroll />
       <TopNav />
       <main>

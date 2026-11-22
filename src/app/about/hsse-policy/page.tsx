@@ -5,16 +5,42 @@ import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { PageHero } from "@/components/page/page-hero";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { TopNav } from "@/components/sections/top-nav";
+import { createBreadcrumbSchema, JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
-  title: "HSSE Policy",
+  title: "HSSE Policy & Quality Standards | VICIAD Engineering",
   description:
-    "VICIAD's health, safety, security and environment policy: quality-assured engineering built on ISO 9001, ISO 14001 and ISO 45001.",
+    "Discover VICIAD's HSSE management framework built on ISO 9001, ISO 14001, and ISO 45001 international standards for safe, sustainable engineering in Nigeria.",
+  alternates: {
+    canonical: "https://www.viciad.org/about/hsse-policy",
+  },
+  openGraph: {
+    title: "HSSE Policy & Quality Standards | VICIAD Engineering",
+    description:
+      "Discover VICIAD's HSSE management framework built on ISO 9001, ISO 14001, and ISO 45001 international standards for safe, sustainable engineering in Nigeria.",
+    url: "https://www.viciad.org/about/hsse-policy",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "VICIAD HSSE Policy" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "HSSE Policy & Quality Standards | VICIAD Engineering",
+    description:
+      "Discover VICIAD's HSSE management framework built on ISO 9001, ISO 14001, and ISO 45001 international standards for safe, sustainable engineering in Nigeria.",
+    images: ["/og-image.jpg"],
+  },
 };
+
+const breadcrumbs = createBreadcrumbSchema([
+  { name: "Home", url: "https://www.viciad.org" },
+  { name: "About Us", url: "https://www.viciad.org/about" },
+  { name: "HSSE Policy", url: "https://www.viciad.org/about/hsse-policy" },
+]);
 
 export default function HssePolicyPage() {
   return (
     <>
+      <JsonLd data={breadcrumbs} />
       <SmoothScroll />
       <TopNav />
       <main>
