@@ -12,25 +12,25 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { Shell } from "@/components/ui/shell";
 
 export const metadata: Metadata = {
-  title: "Contact VICIAD – Engineering Company in Rivers State",
+  title: "Contact VICIAD – Civil Engineering in Rivers State",
   description:
-    "Get in touch with VICIAD Engineering & Construction in Rivers State, Nigeria. Call 08075420004 or email info@viciad.com to discuss your upcoming project.",
+    "Planning an engineering or construction project in Nigeria? Contact VICIAD in Rivers State on 08075420004 or info@viciad.com for expert technical consultation.",
   alternates: {
     canonical: "https://www.viciad.org/contact",
   },
   openGraph: {
-    title: "Contact VICIAD – Engineering Company in Rivers State",
+    title: "Contact VICIAD – Civil Engineering in Rivers State",
     description:
-      "Get in touch with VICIAD Engineering & Construction in Rivers State, Nigeria. Call 08075420004 or email info@viciad.com to discuss your upcoming project.",
+      "Planning an engineering or construction project in Nigeria? Contact VICIAD in Rivers State on 08075420004 or info@viciad.com for expert technical consultation.",
     url: "https://www.viciad.org/contact",
     type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Contact VICIAD Engineering" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact VICIAD – Engineering Company in Rivers State",
+    title: "Contact VICIAD – Civil Engineering in Rivers State",
     description:
-      "Get in touch with VICIAD Engineering & Construction in Rivers State, Nigeria. Call 08075420004 or email info@viciad.com to discuss your upcoming project.",
+      "Planning an engineering or construction project in Nigeria? Contact VICIAD in Rivers State on 08075420004 or info@viciad.com for expert technical consultation.",
     images: ["/og-image.jpg"],
   },
 };

@@ -16,11 +16,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.viciad.org"),
   title: {
-    default: "Civil Engineering & Construction Company Nigeria | VICIAD",
+    default: "Civil Engineering & Infrastructure Projects | VICIAD",
     template: "%s | VICIAD",
   },
   description:
-    "VICIAD delivers ISO-certified civil construction, road and bridge building, piling, and engineering services across Nigeria. Request a consultation today.",
+    "VICIAD delivers engineering that holds and construction that lasts. 147+ completed civil, road, and marine projects across Nigeria. Partner with us today.",
   keywords: [
     "VICIAD",
     "Viciad Engineering & Construction",
@@ -50,9 +50,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://www.viciad.org",
     siteName: "VICIAD Engineering & Construction",
-    title: "Civil Engineering & Construction Company Nigeria | VICIAD",
+    title: "Civil Engineering & Infrastructure Projects | VICIAD",
     description:
-      "VICIAD delivers ISO-certified civil construction, road and bridge building, piling, and engineering services across Nigeria. Request a consultation today.",
+      "VICIAD delivers engineering that holds and construction that lasts. 147+ completed civil, road, and marine projects across Nigeria. Partner with us today.",
     images: [
       {
         url: "/og-image.jpg",
@@ -64,9 +64,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Civil Engineering & Construction Company Nigeria | VICIAD",
+    title: "Civil Engineering & Infrastructure Projects | VICIAD",
     description:
-      "VICIAD delivers ISO-certified civil construction, road and bridge building, piling, and engineering services across Nigeria. Request a consultation today.",
+      "VICIAD delivers engineering that holds and construction that lasts. 147+ completed civil, road, and marine projects across Nigeria. Partner with us today.",
     images: ["/og-image.jpg"],
   },
   robots: {

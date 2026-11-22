@@ -11,25 +11,25 @@ import { TopNav } from "@/components/sections/top-nav";
 import { createBreadcrumbSchema, JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
-  title: "About VICIAD – Civil Engineering Contractors in Nigeria",
+  title: "About VICIAD – Independent Engineering Experts Nigeria",
   description:
-    "Learn about VICIAD Engineering & Construction: 10+ years of quality-assured infrastructure, civil engineering, and independent project management in Nigeria.",
+    "Unbiased by design. VICIAD brings 10+ years of supplier-independent civil engineering and project management across Nigeria. Learn about our mission and team.",
   alternates: {
     canonical: "https://www.viciad.org/about",
   },
   openGraph: {
-    title: "About VICIAD – Civil Engineering Contractors in Nigeria",
+    title: "About VICIAD – Independent Engineering Experts Nigeria",
     description:
-      "Learn about VICIAD Engineering & Construction: 10+ years of quality-assured infrastructure, civil engineering, and independent project management in Nigeria.",
+      "Unbiased by design. VICIAD brings 10+ years of supplier-independent civil engineering and project management across Nigeria. Learn about our mission and team.",
     url: "https://www.viciad.org/about",
     type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "About VICIAD Engineering" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "About VICIAD – Civil Engineering Contractors in Nigeria",
+    title: "About VICIAD – Independent Engineering Experts Nigeria",
     description:
-      "Learn about VICIAD Engineering & Construction: 10+ years of quality-assured infrastructure, civil engineering, and independent project management in Nigeria.",
+      "Unbiased by design. VICIAD brings 10+ years of supplier-independent civil engineering and project management across Nigeria. Learn about our mission and team.",
     images: ["/og-image.jpg"],
   },
 };

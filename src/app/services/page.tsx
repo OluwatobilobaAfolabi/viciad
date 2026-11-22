@@ -11,25 +11,25 @@ import { Delivery } from "@/components/services/delivery";
 import { ServiceList } from "@/components/services/service-list";
 
 export const metadata: Metadata = {
-  title: "Civil Construction & Engineering Services Nigeria | VICIAD",
+  title: "Civil Construction & Commissioning Services | VICIAD",
   description:
-    "Explore VICIAD's comprehensive services: civil works, road and bridge construction, foundation piling, project management, and commissioning support in Nigeria.",
+    "From feasibility studies and detail design to piling, civil works, and commissioning — VICIAD handles projects at any stage across Nigeria. Request a quote.",
   alternates: {
     canonical: "https://www.viciad.org/services",
   },
   openGraph: {
-    title: "Civil Construction & Engineering Services Nigeria | VICIAD",
+    title: "Civil Construction & Commissioning Services | VICIAD",
     description:
-      "Explore VICIAD's comprehensive services: civil works, road and bridge construction, foundation piling, project management, and commissioning support in Nigeria.",
+      "From feasibility studies and detail design to piling, civil works, and commissioning — VICIAD handles projects at any stage across Nigeria. Request a quote.",
     url: "https://www.viciad.org/services",
     type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "VICIAD Engineering Services" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Civil Construction & Engineering Services Nigeria | VICIAD",
+    title: "Civil Construction & Commissioning Services | VICIAD",
     description:
-      "Explore VICIAD's comprehensive services: civil works, road and bridge construction, foundation piling, project management, and commissioning support in Nigeria.",
+      "From feasibility studies and detail design to piling, civil works, and commissioning — VICIAD handles projects at any stage across Nigeria. Request a quote.",
     images: ["/og-image.jpg"],
   },
 };

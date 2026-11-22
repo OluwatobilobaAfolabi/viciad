@@ -8,25 +8,25 @@ import { TopNav } from "@/components/sections/top-nav";
 import { createBreadcrumbSchema, JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
-  title: "Engineering & Construction Projects Portfolio | VICIAD",
+  title: "Civil Construction & Marine Jetty Projects | VICIAD",
   description:
-    "View VICIAD's portfolio of completed and ongoing civil construction, offshore jetty, foundation piling, and road infrastructure projects across Nigeria.",
+    "Explore VICIAD's work on site: shoreline earthworks, offshore loading jetties, bridge decks, and pipeline foundations across Nigeria. View our photo gallery.",
   alternates: {
     canonical: "https://www.viciad.org/gallery",
   },
   openGraph: {
-    title: "Engineering & Construction Projects Portfolio | VICIAD",
+    title: "Civil Construction & Marine Jetty Projects | VICIAD",
     description:
-      "View VICIAD's portfolio of completed and ongoing civil construction, offshore jetty, foundation piling, and road infrastructure projects across Nigeria.",
+      "Explore VICIAD's work on site: shoreline earthworks, offshore loading jetties, bridge decks, and pipeline foundations across Nigeria. View our photo gallery.",
     url: "https://www.viciad.org/gallery",
     type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "VICIAD Projects Portfolio" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Engineering & Construction Projects Portfolio | VICIAD",
+    title: "Civil Construction & Marine Jetty Projects | VICIAD",
     description:
-      "View VICIAD's portfolio of completed and ongoing civil construction, offshore jetty, foundation piling, and road infrastructure projects across Nigeria.",
+      "Explore VICIAD's work on site: shoreline earthworks, offshore loading jetties, bridge decks, and pipeline foundations across Nigeria. View our photo gallery.",
     images: ["/og-image.jpg"],
   },
 };
